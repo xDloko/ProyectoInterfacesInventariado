@@ -3,6 +3,7 @@ Requerimientos:
     - Django 5.1.7 windowsCMD = py -m pip install Django==5.1.7
     - MySQL 8.0 Installer = https://dev.mysql.com/downloads/installer/
     - Opcional MySQL WorkBench Para Administrar la base de datos por interfaz: https://dev.mysql.com/downloads/file/?id=536668
+    - pip install django-admin-interface
 
 Crear Entorno Virtual: 
     python -m venv ENV  Crear Entorno
@@ -12,3 +13,4 @@ Correr Entorno:
 
 Installar requirements:
     pip install -r requirements.txt
+

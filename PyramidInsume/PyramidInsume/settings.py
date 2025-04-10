@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
     #Modulos
     'users',
-    'supplies'
+    'supplies',
     'sales'
 
 
@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pyramidBD',
         'USER': 'root',
-        'PASSWORD': 'Pxnxkzb18',
+        'PASSWORD': '1234',
         'HOST': 'localhost',  
         'PORT': '3306',
         'OPTIONS': {
