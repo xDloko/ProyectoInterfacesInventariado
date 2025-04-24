@@ -3,14 +3,36 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
+from django.contrib.auth import authenticate
 from .models import User
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+from django.contrib.auth import logout
 
 def is_administrador(user):
     return user.is_authenticated and user.is_administrador
+
+def is_promotor(user):
+    return user.is_authenticated and user.is_promotor
+
+def is_admin_or_promotor(user):
+    return user.is_authenticated and user.is_admin_or_promotor
+
+class DashBoard(View):
+    template_name = 'users/dashboard.html'
+    
+    @method_decorator(login_required)
+    @method_decorator(user_passes_test(is_admin_or_promotor))
+
+
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+    
 
 class UserListView(ListView):
     model = User
@@ -18,9 +40,12 @@ class UserListView(ListView):
     context_object_name = 'users'
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_administrador))
+    @method_decorator(user_passes_test(is_admin_or_promotor))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'users': self.get_queryset()})
 
 class UserCreateView(CreateView):
     model = User
@@ -29,7 +54,7 @@ class UserCreateView(CreateView):
     success_url = reverse_lazy('user_list')
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_administrador))
+    @method_decorator(user_passes_test(is_admin_or_promotor))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     
@@ -62,7 +87,7 @@ class UserDeleteView(DeleteView):
     success_url = reverse_lazy('user_list')
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_administrador))
+    @method_decorator(user_passes_test(is_admin_or_promotor))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -78,7 +103,7 @@ def toggle_user_active(request, pk):
 #login
 
 class CustomLoginView(LoginView):
-    template_name = 'login/login.html'
+    template_name = 'accounts/login.html'
     redirect_authenticated_user = True  # Redirige si ya está autenticado
     
     def get_success_url(self):
@@ -86,11 +111,12 @@ class CustomLoginView(LoginView):
         if user.is_administrador:
             return reverse_lazy('admin_dashboard')
         elif user.is_vendedor:
-            return reverse_lazy('sales_dashboard')
+            return reverse_lazy('sales_list')
+        elif user.is_promotor:
+            return reverse_lazy('user_list')
         return reverse_lazy('home')
 
 def logout_view(request):
-    from django.contrib.auth import logout
     logout(request)
     messages.success(request, 'Has cerrado sesión correctamente.')
     return redirect('login')

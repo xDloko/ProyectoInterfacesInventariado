@@ -1,0 +1,50 @@
+{% extends 'users/dashboard.html' %} {% load static %}
+{% block content %}
+    <head>
+        <link rel="stylesheet" href="{% static 'supplies/css/suppliesdashboard.css' %}">
+    </head>
+    <h6 class="title">Lista de Insumos</h6>
+    <div class="action-buttons">
+        <a href="{% url 'insumo_create' %}"><button class="action-button add">Añadir</button></a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Cantidad Disponible</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Fecha de Creaccion</th>
+
+                {% if request.user.is_administrador %}
+                    <th>Acciones</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for insumo in insumos %}
+                <!-- <tr>
+                    <td>
+                        {{.insumo.email }}
+                    </td>
+                </tr> -->
+                
+                <tr>
+                    <td>{{ insumo.nombre }}</td>
+                    <td>{{ insumo.descripcion }}</td>
+                    <td>{{ insumo.cantidad_disponible }}</td>
+                    <td>{{ insumo.precio_unitario }}</td>
+                    <td>{% if insumo.esta_publicado %}Publicado{% else %}N/A{% endif %}</td>
+                    <td>{{ insumo.fecha_creacion }}</td>
+                    <td>
+                        {% if request.user.is_administrador %}
+                            <a href="{% url 'insumo_update' insumo.pk %}" class="btn btn-sm btn-info">Editar</a>
+                            <a href="{% url 'insumo_delete' insumo.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

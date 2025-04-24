@@ -1,55 +1,97 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View, ListView, UpdateView, DeleteView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.urls import reverse_lazy
 from supplies.models import Insumo
 from .models import Venta  # Asumiendo que ya creaste este modelo
+from .forms import VentaForm  # Import the VentaForm class
 from django.utils import timezone
 
-# Dashboard principal
-class DashboardView(TemplateView):
-    template_name = 'sales/sales_dashboard.html'
+
+class SalesList(ListView):
+    model = Venta
+    template_name = 'sales/sales_list.html'
+    context_object_name = 'ventas'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
-        return context
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'ventas': self.get_queryset()})
 
 
-# Registrar venta - solo vendedores
-@login_required
-def registrar_venta(request):
-    if not request.user.is_vendedor:
-        messages.error(request, "No tienes permiso para realizar ventas.")
-        return redirect('sales_dashboard')
+@method_decorator(login_required, name='dispatch')
+class VentaCreateView(CreateView):
+    model = Venta
+    form_class = VentaForm
+    template_name = 'sales/sales_form.html'
+    success_url = reverse_lazy('venta_create')  # redirige a sí misma
 
-    insumos_disponibles = Insumo.objects.filter(esta_publicado=True, cantidad_disponible__gt=0)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
-    if request.method == 'POST':
-        insumo_id = request.POST.get('insumo_id')
-        cantidad = int(request.POST.get('cantidad'))
+    def form_valid(self, form):
+        venta = form.save(commit=False)
+        venta.vendedor = self.request.user
+        venta.save()
 
-        insumo = get_object_or_404(Insumo, id=insumo_id)
+        # Actualizar el stock del insumo
+        venta.insumo.cantidad_disponible -= venta.cantidad_vendida
+        venta.insumo.save()
 
-        if cantidad > insumo.cantidad_disponible:
-            messages.error(request, "La cantidad solicitada excede la disponibilidad.")
-        else:
-            Venta.objects.create(
-                insumo=insumo,
-                vendedor=request.user,
-                cantidad_vendida=cantidad,
-                fecha_venta=timezone.now()
-            )
-            insumo.cantidad_disponible -= cantidad
+        messages.success(self.request, f"Venta registrada: {venta.cantidad_vendida} unidades de {venta.insumo.nombre}.")
+        return super().form_valid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_vendedor and not request.user.is_administrador:
+            messages.error(request, "No tienes permiso para realizar ventas.")
+            return redirect('sales_list')
+        return super().dispatch(request, *args, **kwargs)
+
+
+@method_decorator(login_required, name='dispatch')
+class VentaUpdateView(UpdateView):
+    model = Venta
+    form_class = VentaForm
+    template_name = 'sales/sales_form.html'
+    success_url = reverse_lazy('sales_list')  # ajusta según tus rutas
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        venta = form.save(commit=False)
+        venta_anterior = Venta.objects.get(pk=venta.pk)
+        insumo = venta.insumo
+
+        diferencia = venta.cantidad_vendida - venta_anterior.cantidad_vendida
+
+        if diferencia != 0:
+            # Actualizar la cantidad disponible del insumo
+            insumo.cantidad_disponible -= diferencia
             insumo.save()
-            messages.success(request, f"Venta registrada: {cantidad} unidades de {insumo.nombre}.")
-            return redirect('registrar_venta')
 
-    return render(request, 'sales/registrar_venta.html', {
-        'insumos': insumos_disponibles
-    })
+        venta.save()
+        messages.success(self.request, f"Venta actualizada: {venta.cantidad_vendida} unidades de {venta.insumo.nombre}.")
+        return redirect(self.success_url)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Hubo un error al actualizar la venta.")
+        return super().form_invalid(form)
+
+
+class VentaDeleteView(DeleteView):
+    model = Venta
+    template_name = 'sales/sales_confirm_delete.html'
+    success_url = reverse_lazy('sales_list')
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)

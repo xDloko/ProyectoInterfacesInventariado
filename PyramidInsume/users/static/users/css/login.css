@@ -1,0 +1,98 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body, html {
+    height: 100%;
+    background: linear-gradient(135deg, #ff1764 0%, #c50233 100%);
+  }
+  
+  /* Wrapper centrado */
+  .login-wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  /* Estilo del formulario */
+  .login-form {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+  }
+  
+  .login-form h4 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .login-form .form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 0.75rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  .login-form .form-control:focus {
+    border-color: #ff1275;
+    outline: none;
+  }
+  
+  .login-form button {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #ff1259;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-align: center;
+  }
+  
+  .login-form button:hover {
+    background: #ff0000;
+  }
+  
+  .login-form a {
+    color: #ff1261;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .login-form a:hover {
+    text-decoration: underline;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+  }
+
+.mb-3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.alert-danger {
+  color: #ff0040;
+
+}

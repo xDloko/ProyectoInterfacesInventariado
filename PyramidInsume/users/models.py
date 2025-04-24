@@ -75,3 +75,11 @@ class User(AbstractUser):
     @property
     def is_promotor(self):
         return self.user_type == 3
+    
+    @property
+    def name(self):
+        return self.email
+    
+    @property
+    def is_admin_or_promotor(self):
+        return self.is_administrador or self.is_promotor

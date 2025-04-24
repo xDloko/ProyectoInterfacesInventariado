@@ -18,3 +18,7 @@ class Venta(models.Model):
 
     def __str__(self):
         return f"{self.insumo.nombre} vendido por {self.vendedor.email} - {self.fecha_venta.strftime('%d/%m/%Y')}"
+    
+    @property
+    def total_venta(self):
+        return self.insumo.precio_unitario * self.cantidad_vendida

@@ -1,41 +1,58 @@
-{% extends 'base.html' %}
-
+{% extends 'users/dashboard.html' %} {% load static %}
 {% block content %}
-<h1>Lista de Usuarios</h1>
-{% if request.user.is_administrador %}
-<a href="{% url 'user_create' %}" class="btn btn-primary">Nuevo Usuario</a>
-{% endif %}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.email }}</td>
-            <td>{{ user.get_full_name }}</td>
-            <td>{{ user.get_user_type_display }}</td>
-            <td>{% if user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
-            <td>
-                <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-info">Editar</a>
+<head>
+    <link rel="stylesheet" href="{% static 'users/css/list.css' %}">
+</head>
+    <h6 class="title">Lista de Usuarios</h6>
+
+    <div class="action-buttons">
+        <a href="{% url 'user_create' %}"><button class="action-button add">Añadir</button></a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Estado</th>
                 {% if request.user.is_administrador %}
-                    {% if user.is_active %}
-                    <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-warning">Desactivar</a>
-                    {% else %}
-                    <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-success">Activar</a>
-                    {% endif %}
-                    <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    <th>Acciones</th>
                 {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+
+                {% if request.user.is_promotor and user.user_type == 1 %}
+                <!-- <tr>
+                    <td>
+                        {{ user.email }}
+                    </td>
+                </tr> -->
+                {% else %}
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.get_full_name }}</td>
+                    <td>{{ user.get_user_type_display }}</td>
+                    <td>{% if user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
+                    <td>
+                        {% if request.user.is_administrador %}
+                        <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-info">Editar</a>
+                            {% if user.is_active %}
+                            <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-warning">Desactivar</a>
+                            {% else %}
+                            <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-success">Activar</a>
+                            {% endif %}
+                            <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}

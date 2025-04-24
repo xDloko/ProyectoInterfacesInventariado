@@ -1,0 +1,62 @@
+{% extends 'users/dashboard.html' %} {% load static %}
+{% block content %}
+    <head>
+        <link rel="stylesheet" href="{% static 'sales/css/salesdashboard.css' %}">
+    </head>
+    <h6 class="title">Lista de Ventas</h6>
+    <div class="action-buttons">
+        <a href="{% url 'venta_create' %}"><button class="action-button add">Añadir</button></a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Insumo</th>
+                <th>Cantidad Vendida</th>
+                <th>Fecha de Venta</th>
+                <th>Vendedor Responsable</th>
+                <th>Precio Total</th>
+
+                {% if request.user.is_administrador %}
+                    <th>Acciones</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+                {% if request.user.is_vendedor or request.user.is_promotor %}
+                    {% if venta.vendedor.email == request.user.email %}
+                        <tr>
+                            <td>{{ venta.insumo.nombre }}</td>
+                            <td>{{ venta.cantidad_vendida }}</td>
+                            <td>{{ venta.fecha_venta }}</td>
+                            <td>{{ venta.vendedor.email }}</td>
+                            <td>{{ venta.total_venta }}</td>
+
+                            <td>
+                                {% if request.user.is_administrador %}
+                                    <a href="{% url 'venta_update' venta.pk %}" class="btn btn-sm btn-info">Editar</a>
+                                    <a href="{% url 'venta_delete' venta.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td>{{ venta.insumo.nombre }}</td>
+                        <td>{{ venta.cantidad_vendida }}</td>
+                        <td>{{ venta.fecha_venta }}</td>
+                        <td>{{ venta.vendedor.email }}</td>
+                        <td>{{ venta.total_venta }}</td>
+
+                        <td>
+                            {% if request.user.is_administrador %}
+                                <a href="{% url 'venta_update' venta.pk %}" class="btn btn-sm btn-info">Editar</a>
+                                <a href="{% url 'venta_delete' venta.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

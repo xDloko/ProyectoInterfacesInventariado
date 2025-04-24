@@ -32,8 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',
-    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +43,7 @@ INSTALLED_APPS = [
     #Modulos
     'users',
     'supplies',
-    'sales'
+    'sales',
 
 
 ]
@@ -93,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pyramidBD',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': 'Pxnxkzb18',
         'HOST': 'localhost',  
         'PORT': '3306',
         'OPTIONS': {
@@ -138,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -158,3 +156,12 @@ LOGOUT_REDIRECT_URL = 'login'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+#email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Ejemplo: smtp.gmail.com
+EMAIL_PORT = 587 
+EMAIL_USE_TLS = True 
+EMAIL_HOST_USER = 'insumepyramid@gmail.com'  # Tu dirección de correo
+EMAIL_HOST_PASSWORD = 'yjge hdeo eqvt xwgm'  # Contraseña del correo
+DEFAULT_FROM_EMAIL = 'insumepyramid@gmail.com'  # Dirección que aparecerá como remitente

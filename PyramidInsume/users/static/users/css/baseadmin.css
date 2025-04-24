@@ -1,0 +1,141 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Encabezado */
+.header {
+    background-color: #e74c69; /* Rosa fuerte */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: #fff;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-items: space-between;
+    width: 100%;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    margin-right: 20px;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    max-width: 98%;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Menú lateral */
+.sidebar {
+    width: 250px;
+    padding: 20px;
+    border-right: 1px solid #e74c69;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu-item {
+    display: block;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: 1px solid #e74c69;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+    width: 200px;
+}
+
+.menu-item:hover {
+    background-color: #e74c69;
+    color: #fff;
+}
+
+.menu-item.active {
+    background-color: #e74c69;
+    color: #fff;
+}
+
+/* Contenido principal */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+
+/* Área central (contenido vacío) */
+.placeholder-content {
+    background-color: #f0f0f0;
+    border: 1px dashed #ccc;
+}
+
+
+
+.logout {
+    color: #ffffff;
+    text-decoration: none;
+    
+}
+
+.logout h1 {
+    font-size: 18px;
+    color: #ffffff;
+    text-align: right;
+    position: relative;
+    
+}
+
+/* .logout h1:hover {
+    color: #ff002f;
+} */
+
+
+.logout h1::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: 0;
+height: 2px;
+width: 0;
+background-color: currentColor;
+transition: width 0.3s ease;
+}
+
+.logout h1:hover::after {
+    width: 100%;
+}
+
+.useroptions {
+    display: flex;
+    margin-left: auto;
+
+}

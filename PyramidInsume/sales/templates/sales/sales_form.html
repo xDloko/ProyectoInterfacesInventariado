@@ -1,0 +1,13 @@
+{% extends 'sales/sales_list.html' %} {% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'sales/css/salesdashboard.css' %}">
+</head>
+<h1>{% if object %}Editar{% else %}Crear{% endif %} Venta</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Registrar</button>
+</form>
+{% endblock %}
