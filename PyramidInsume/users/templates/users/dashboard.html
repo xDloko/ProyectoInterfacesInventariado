@@ -6,18 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title>
     <link rel="stylesheet" href="{% static 'users/css/baseadmin.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Encabezado -->
     <header class="header">
         <div class="logo-container">
             <img src="{% static 'users/images/pyramid.png' %}" alt="Avatar" class="avatar">
-            <h1 class="title">insumi</h1>
+            <h1 class="title apptitle">insumi</h1>
 
             <h1 class="title">Bienvenido: {{ request.user.name }}</h1>
 
             <div class="useroptions">
-                <a href="{% url 'logout' %}" class="logout"><h1 class="title">Termianar Sesion</h1></a>
+                <a href="{% url 'logout' %}" class="logout"><h1 class="title">Terminar Sesion</h1></a>
             </div>
         </div>
     </header>

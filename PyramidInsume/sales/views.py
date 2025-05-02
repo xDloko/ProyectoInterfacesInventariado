@@ -8,6 +8,10 @@ from supplies.models import Insumo
 from .models import Venta  # Asumiendo que ya creaste este modelo
 from .forms import VentaForm  # Import the VentaForm class
 from django.utils import timezone
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
+from collections import defaultdict
+
 
 
 class SalesList(ListView):
@@ -19,8 +23,40 @@ class SalesList(ListView):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'ventas': self.get_queryset()})
+    def get_queryset(self):
+        return Venta.objects.select_related('insumo', 'vendedor')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ventas = self.get_queryset()
+
+        context['total_ventas'] = ventas.aggregate(total=Sum('cantidad_vendida'))['total'] or 0
+        context['total_dinero'] = sum(v.total_venta for v in ventas)
+
+        context['ventas_por_insumo'] = (
+            ventas.values('insumo__nombre')
+            .annotate(total=Sum('cantidad_vendida'))
+            .order_by('-total')[:5]
+        )
+
+        context['ventas_por_vendedor'] = (
+            ventas.values('vendedor__email')
+            .annotate(total=Sum('cantidad_vendida'))
+            .order_by('-total')
+        )
+
+
+        ventas_mensuales = defaultdict(int)
+        for venta in ventas:
+            mes = venta.fecha_venta.strftime('%Y-%m')  # Formato: 2025-05
+            ventas_mensuales[mes] += venta.cantidad_vendida
+
+        context['ventas_mensuales'] = [
+            {'mes': k, 'total': v} for k, v in sorted(ventas_mensuales.items())
+        ]
+
+        return context
+    
 
 
 @method_decorator(login_required, name='dispatch')

@@ -37,10 +37,11 @@ body {
 }
 
 .title {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     margin: 0;
     margin-right: 20px;
+    padding: 10px;
 }
 
 /* Contenedor principal */
@@ -139,3 +140,12 @@ transition: width 0.3s ease;
     margin-left: auto;
 
 }
+
+
+.apptitle {
+    font-family: "Playwrite RO", cursive;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+  }

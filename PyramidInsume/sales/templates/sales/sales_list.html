@@ -7,6 +7,59 @@
     <div class="action-buttons">
         <a href="{% url 'venta_create' %}"><button class="action-button add">Añadir</button></a>
     </div>
+    <div>
+        <h1>Dashboard de Ventas</h1>
+
+        <p><strong>Total de Ventas:</strong> {{ total_ventas }}</p>
+        <p><strong>Total en Dinero:</strong> ${{ total_dinero }}</p>
+
+        <h2>Ventas por Insumo (Top 5)</h2>
+        <ul>
+        {% for item in ventas_por_insumo %}
+            <li>{{ item.insumo__nombre }}: {{ item.total }} unidades</li>
+        {% endfor %}
+        </ul>
+
+        <h2>Ventas por Vendedor</h2>
+        <ul>
+        {% for item in ventas_por_vendedor %}
+            <li>{{ item.vendedor__email }}: {{ item.total }} unidades</li>
+        {% endfor %}
+        </ul>
+
+        <h3>Gráfica de Ventas Mensuales</h3>
+        <canvas id="ventasMensualesChart" width="400" height="200"></canvas>
+        {{ ventas_mensuales|json_script:"ventas-mensuales" }}
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const rawData = JSON.parse(document.getElementById("ventas-mensuales").textContent);
+        
+            const labels = rawData.map(item => item.mes);
+            const data = rawData.map(item => item.total);
+        
+            new Chart(document.getElementById('ventasMensualesChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Cantidad Vendida',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
     <table class="table">
         <thead>
             <tr>
