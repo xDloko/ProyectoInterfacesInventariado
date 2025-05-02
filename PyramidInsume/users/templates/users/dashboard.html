@@ -1,12 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title>
     <link rel="stylesheet" href="{% static 'users/css/baseadmin.css' %}">
 </head>
+
 <body>
     <!-- Encabezado -->
     <header class="header">
@@ -15,9 +17,13 @@
             <h1 class="title">insumi</h1>
 
             <h1 class="title">Bienvenido: {{ request.user.name }}</h1>
+            <h1 class="title">Agente: {{ request.user.get_user_type_display }}</h1>
+
 
             <div class="useroptions">
-                <a href="{% url 'logout' %}" class="logout"><h1 class="title">Termianar Sesion</h1></a>
+                <a href="{% url 'logout' %}" class="logout">
+                    <h1 class="title">Termianar Sesion</h1>
+                </a>
             </div>
         </div>
     </header>
@@ -27,12 +33,16 @@
         <!-- Menú lateral -->
         <nav class="sidebar">
             <ul class="menu">
-                {% if request.user.is_administrador or request.user.is_promotor %}
-                    <li><a href="{% url 'supplies_list' %}" class="menu-item supplies-menu">Gestión de Productos</a></li>
-                    <li><a href="{% url 'user_list' %}" class="menu-item user-menu">Gestión de Usuarios</a></li>
-                    <li><a href="{% url 'sales_list' %}" class="menu-item sales-menu">Mis Ventas</a></li>
+                {% if request.user.is_administrador %}
+                <li><a href="{% url 'supplies_list' %}" class="menu-item supplies-menu">Gestión de Productos</a></li>
+                <li><a href="{% url 'user_list' %}" class="menu-item user-menu">Gestión de Usuarios</a></li>
+                <li><a href="{% url 'sales_list' %}" class="menu-item sales-menu">Mis Ventas</a></li>
                 {% elif request.user.is_vendedor %}
-                    <li><a href="{% url 'sales_list' %}" class="menu-item">Mis Ventas</a></li>
+                <li><a href="{% url 'sales_list' %}" class="menu-item">Mis Ventas</a></li>
+                <li><a href="{% url 'user_list' %}" class="menu-item user-menu">Gestión de Usuarios</a></li>
+                {% elif request.user.is_supervisor %}
+                <li><a href="{% url 'user_list' %}" class="menu-item user-menu">Gestión de Usuarios</a></li>
+                <li><a href="{% url 'sales_list' %}" class="menu-item sales-menu">Mis Ventas</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -51,4 +61,5 @@
         </main>
     </div>
 </body>
+
 </html>

@@ -48,7 +48,7 @@ class User(AbstractUser):
     USER_TYPE_CHOICES = (
         (1, 'Administrador'),
         (2, 'Vendedor'),
-        (3, 'Promotor'),
+        (3, 'Supervisor'),
     )
 
 
@@ -73,7 +73,7 @@ class User(AbstractUser):
         return self.user_type == 2
     
     @property
-    def is_promotor(self):
+    def is_supervisor(self):
         return self.user_type == 3
     
     @property
@@ -81,5 +81,5 @@ class User(AbstractUser):
         return self.email
     
     @property
-    def is_admin_or_promotor(self):
-        return self.is_administrador or self.is_promotor
+    def is_admin_or_supervisor(self):
+        return self.is_administrador or self.is_supervisor

@@ -14,17 +14,17 @@ from django.contrib.auth import logout
 def is_administrador(user):
     return user.is_authenticated and user.is_administrador
 
-def is_promotor(user):
-    return user.is_authenticated and user.is_promotor
+def is_supervisor(user):
+    return user.is_authenticated and user.is_supervisor
 
-def is_admin_or_promotor(user):
-    return user.is_authenticated and user.is_admin_or_promotor
+def is_admin_or_surpervisor(user):
+    return user.is_authenticated and user.is_admin_or_supervisor
 
 class DashBoard(View):
     template_name = 'users/dashboard.html'
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_admin_or_promotor))
+    @method_decorator(user_passes_test(is_admin_or_surpervisor))
 
 
     def dispatch(self, *args, **kwargs):
@@ -40,7 +40,6 @@ class UserListView(ListView):
     context_object_name = 'users'
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_admin_or_promotor))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     
@@ -54,7 +53,6 @@ class UserCreateView(CreateView):
     success_url = reverse_lazy('user_list')
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_admin_or_promotor))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     
@@ -87,7 +85,7 @@ class UserDeleteView(DeleteView):
     success_url = reverse_lazy('user_list')
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_admin_or_promotor))
+    @method_decorator(user_passes_test(is_admin_or_surpervisor))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -112,7 +110,7 @@ class CustomLoginView(LoginView):
             return reverse_lazy('admin_dashboard')
         elif user.is_vendedor:
             return reverse_lazy('sales_list')
-        elif user.is_promotor:
+        elif user.is_supervisor:
             return reverse_lazy('user_list')
         return reverse_lazy('home')
 
