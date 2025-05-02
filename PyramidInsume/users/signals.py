@@ -6,7 +6,7 @@ from .models import User
 
 @receiver(post_save, sender=User)
 def user_created(sender, instance, created, **kwargs):
-    if created and instance.is_promotor:
+    if created and instance.is_supervisor:
         # Lógica específica para cuando se crea un promotor
         pass
     

@@ -23,6 +23,13 @@ class CustomUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super().__init__(*args, **kwargs)
+
+        # Si es supervisor, limita los campos visibles
+        if self.request and self.request.user.is_supervisor:
+            allowed_fields = ['is_active']
+            for field_name in list(self.fields.keys()):
+                if field_name not in allowed_fields:
+                    del self.fields[field_name]
         
         # Solo administradores pueden cambiar tipos de usuario
         if self.request and not self.request.user.is_administrador:
