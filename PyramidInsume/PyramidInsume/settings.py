@@ -91,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pyramidBD',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': 'Pxnxkzb18',
         'HOST': 'localhost',  
         'PORT': '3306',
         'OPTIONS': {

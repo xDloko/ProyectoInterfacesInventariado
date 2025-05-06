@@ -2,3 +2,5 @@ proyecto-env/
 *.pyc 
 __pycache__/
 ENV/
+.pyc
+__pycache__/

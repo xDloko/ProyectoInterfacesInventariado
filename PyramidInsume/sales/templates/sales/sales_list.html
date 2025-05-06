@@ -3,10 +3,6 @@
     <head>
         <link rel="stylesheet" href="{% static 'sales/css/salesdashboard.css' %}">
     </head>
-    <h6 class="title">Lista de Ventas</h6>
-    <div class="action-buttons">
-        <a href="{% url 'venta_create' %}"><button class="action-button add">Añadir</button></a>
-    </div>
     <div>
         <h1>Dashboard de Ventas</h1>
 
@@ -59,6 +55,10 @@
                 }
             });
         </script>
+    </div>
+    <h6 class="title">Lista de Ventas</h6>
+    <div class="action-buttons">
+        <a href="{% url 'venta_create' %}"><button class="action-button add">Añadir</button></a>
     </div>
     <table class="table">
         <thead>
