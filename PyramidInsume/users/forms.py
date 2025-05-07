@@ -5,7 +5,7 @@ from .models import User
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('email', 'user_type', 'username', 'first_name', 'last_name')
+        fields = ('email', 'user_type', 'username', 'first_name', 'last_name', 'ciudad')
         
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -18,7 +18,7 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = User
-        fields = ('email', 'user_type', 'username','first_name', 'last_name', 'is_active')
+        fields = ('email', 'user_type', 'username','first_name', 'last_name', 'is_active', 'ciudad')
         
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)

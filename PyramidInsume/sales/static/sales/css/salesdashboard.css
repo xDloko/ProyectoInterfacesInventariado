@@ -1,4 +1,237 @@
-.sales-menu  {
+/* ======= Dashboard de Ventas - Estilos Aislados ======= */
+
+/* Encabezado principal */
+.sales-dashboard h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 1rem;
+}
+
+/* Contenedor de título + botón */
+.sales-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 1rem;
+}
+
+/* Botón de generar reportes */
+.action-button.generate-report {
+    padding: 10px 20px;
+    border: 1px solid #3498db;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #3498db;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.action-button.generate-report:hover {
+    background: #3498db;
     color: #fff;
-    background-color: #e74c69;
+    transform: translateY(-1px);
+}
+
+
+
+.sales-dashboard h1 a {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.sales-dashboard h1 a:hover {
+    text-decoration: underline;
+}
+
+/* Datos resumen */
+.sales-dashboard p {
+    margin: 0.5rem 1rem;
+    color: #34495e;
+    font-size: 1rem;
+}
+
+/* Subtítulos */
+.sales-dashboard h2,
+.sales-dashboard h3 {
+    margin: 1.5rem 1rem 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Listas de ventas */
+.sales-dashboard ul {
+    margin: 0 1.5rem 1rem;
+    padding-left: 1.2rem;
+}
+
+.sales-dashboard ul li {
+    margin-bottom: 0.25rem;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Canvas para gráficas */
+#ventasMensualesChart {
+    margin: 2rem auto;
+    display: block;
+    max-width: 600px;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Título Lista */
+
+.sales-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 2rem 1rem 1rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+/* Botones de acción */
+.action-buttons {
+    margin: 1rem;
+}
+
+.action-button {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-button.add {
+    padding: 10px 20px;
+    border: 1px solid #e74c69;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #e74c69;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.action-button.add:hover {
+    background: #e74c69;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Tabla */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+    margin: 1rem;
+}
+
+.table thead th {
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Botones dentro de tabla */
+.btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+/* Editar */
+.btn-info {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.btn-info:hover {
+    background: #cbd5e1;
+}
+
+/* Eliminar */
+.btn-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.btn-danger:hover {
+    background: #fecaca;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .table thead {
+        display: none;
+    }
+
+    .table tbody td {
+        display: block;
+        padding: 0.75rem;
+    }
+
+    .table tbody td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: inline-block;
+        width: 120px;
+        color: #64748b;
+    }
+
+    .btn {
+        display: block;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    #ventasMensualesChart {
+        width: 100%;
+        height: auto;
+    }
 }

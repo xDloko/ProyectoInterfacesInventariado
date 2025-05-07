@@ -15,6 +15,7 @@
             <th>Email</th>
             <th>Nombre</th>
             <th>Tipo</th>
+            <th>Ciudad</th>
             <th>Estado</th>
             {% if request.user.is_administrador %}
             <th>Acciones</th>
@@ -33,6 +34,7 @@
             <td>{{ user.email }}</td>
             <td>{{ user.get_full_name }}</td>
             <td>{{ user.get_user_type_display }}</td>
+            <td>{{ user.ciudad }}</td>
             <td>{% if user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
             <td>
                 {% if request.user.is_administrador or request.user.is_supervisor %}

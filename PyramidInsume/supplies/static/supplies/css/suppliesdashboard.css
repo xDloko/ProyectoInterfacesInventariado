@@ -1,4 +1,197 @@
 .supplies-menu {
     color: #fff;
-    background-color: #e74c69; 
+    background-color: #e74c69;
+}
+
+/* Contenedor principal 
+*/
+.supplies-container {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin: 1rem;
+}
+
+/* Título principal */
+
+.supplies-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+/* Botones de acción */
+.action-buttons {
+    margin-bottom: 1.5rem;
+}
+
+.action-button {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-button.add {
+    padding: 10px 20px;
+    border: 1px solid #e74c69;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #e74c69;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.action-button.add:hover {
+    background: #e74c69;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Estilos para la tabla */
+.table,
+.supplies-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+}
+
+.table thead th {
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 1rem;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.table td:nth-child(3),
+.table td:nth-child(4) {
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+}
+
+.table td:nth-child(4) {
+    color: #4e73df;
+}
+
+/* Botones dentro de la tabla */
+.btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-info {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.btn-info:hover {
+    background: #cbd5e1;
+}
+
+.btn-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.btn-danger:hover {
+    background: #fecaca;
+}
+
+/* Estado Publicado / N/A */
+.status-published {
+    color: #166534;
+    background: #dcfce7;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.status-unpublished {
+    color: #9a3412;
+    background: #ffedd5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Transiciones */
+.table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .supplies-container {
+        padding: 1rem;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table tbody td {
+        display: block;
+        padding: 0.75rem;
+    }
+
+    .table tbody td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: inline-block;
+        width: 120px;
+        color: #64748b;
+    }
+
+    .btn {
+        display: block;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
 }

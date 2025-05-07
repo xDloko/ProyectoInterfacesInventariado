@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12px; }
+        h1, h2, h3 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 5px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Reporte General</h1>
+
+    <h2>Insumos</h2>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+        </tr>
+        {% for i in insumos %}
+        <tr>
+            <td>{{ i.nombre }}</td>
+            <td>{{ i.cantidad }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Bodega</h2>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Stock</th>
+        </tr>
+        {% for b in bodega %}
+        <tr>
+            <td>{{ b.nombre }}</td>
+            <td>{{ b.stock }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Espacios Prestados</h2>
+    <table>
+        <tr>
+            <th>Espacio</th>
+            <th>Fecha</th>
+        </tr>
+        {% for p in prestamos %}
+        <tr>
+            <td>{{ p.espacio }}</td>
+            <td>{{ p.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

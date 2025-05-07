@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class Insumo(models.Model):
+    #aqui se añaden los campos de los usuarios
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     cantidad_disponible = models.PositiveIntegerField(default=0)

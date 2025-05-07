@@ -13,8 +13,6 @@ def is_administrador(user):
 def is_promotor(user):
     return user.is_authenticated and user.is_promotor
 
-def is_admin_or_promotor(user):
-    return user.is_authenticated and user.is_admin_or_promotor
 
 class SuppliesListView(ListView):
     model = Insumo

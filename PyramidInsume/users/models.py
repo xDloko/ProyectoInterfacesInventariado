@@ -51,10 +51,12 @@ class User(AbstractUser):
         (3, 'Supervisor'),
     )
 
-
+    #aqui se añaden los campos de los usuarios
     email = models.EmailField(_('email address'), unique=True)
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
     is_active = models.BooleanField(default=True)
+    ciudad = models.CharField(max_length=100, blank=True, null=True)
+
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
