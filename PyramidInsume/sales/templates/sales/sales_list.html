@@ -1,42 +1,46 @@
-{% extends 'users/dashboard.html' %} {% load static %}
-{% block content %}
+{% extends 'users/dashboard.html' %} {% load static %} {% block content %}
+
 <head>
     <link rel="stylesheet" href="{% static 'sales/css/salesdashboard.css' %}">
 </head>
 <div>
     <div class="sales-header">
-        <h1><span style="font-weight:800;">Dashboard de Ventas</span></h1>
+        <h1 class="title-dashboard"><span style="font-weight:800;">Dashboard de Ventas</span></h1>
         <a href="{% url 'reports' %}"><span style="font-weight:400;" class="action-button generate-report">Generar Reportes</span></a>
-     
+
     </div>
-    <p>
-        <strong>Total de Ventas:</strong>{{ total_ventas }}
+    <p class="sales-summary">
+        <strong class="strong-p">Total de Ventas:</strong>{{ total_ventas }}
     </p>
-    <p>
-        <strong>Total en Dinero:</strong>${{ total_dinero }}
+    <p class="sales-summary">
+        <strong class="strong-p">Total en Dinero:</strong>${{ total_dinero }}
     </p>
-    <h2>Ventas por Insumo (Top 5)</h2>
-    <ul>
-        {% for item in ventas_por_insumo %}
-<li>{{ item.insumo__nombre }}: {{ item.total }} unidades</li>
+    <h2 class="top5-title">Ventas por Insumo (Top 5)</h2>
+    <ul class="top5-list">
+        {% for item in top_5_insumos %}
+        <li>{{ item.insumo__nombre }}: {{ item.total }} unidades</li>
+        {% endfor %} {% for item in ventas_por_insumo %}
+        <li>{{ item.insumo__nombre }}: {{ item.total }} unidades</li>
         {% endfor %}
     </ul>
-    <h2>Ventas por Vendedor</h2>
-    <ul>
+    <h2 class="sales-title">Ventas por Vendedor (Top 10)</h2>
+    <ul class="top5-list">
         {% for item in ventas_por_vendedor %}
-<li>{{ item.vendedor__email }}: {{ item.total }} unidades</li>
+        <li>{{ item.vendedor__email }}: {{ item.total }} unidades</li>
         {% endfor %}
     </ul>
-    <h3>Gráfica de Ventas Mensuales</h3>
-    <canvas id="ventasMensualesChart" width="400" height="200"></canvas>
-{{ ventas_mensuales|json_script:"ventas-mensuales" }}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+
+    <h3 class="title-canva">Gráfica de Ventas Mensuales</h3>
+    <div class="charts-container">
+
+        <canvas id="ventasMensualesChart" width="400" height="200"></canvas> {{ ventas_mensuales|json_script:"ventas-mensuales" }}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
             const rawData = JSON.parse(document.getElementById("ventas-mensuales").textContent);
-        
+
             const labels = rawData.map(item => item.mes);
             const data = rawData.map(item => item.total);
-        
+
             new Chart(document.getElementById('ventasMensualesChart'), {
                 type: 'bar',
                 data: {
@@ -58,6 +62,59 @@
                 }
             });
         </script>
+
+        <canvas id="MoneyMensualesChart" width="400" height="200"></canvas> {{ dinero_mensual|json_script:"money-mensuales" }}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const rawData2 = JSON.parse(document.getElementById("money-mensuales").textContent);
+
+            const labels2 = rawData2.map(item => item.mes);
+            const data2 = rawData2.map(item => item.total);
+
+            new Chart(document.getElementById('MoneyMensualesChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels2,
+                    datasets: [{
+                        label: 'Dinero Obtenido Por Mes',
+                        data: data2,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return new Intl.NumberFormat('es-CO', {
+                                        style: 'currency',
+                                        currency: 'COP'
+                                    }).format(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    return new Intl.NumberFormat('es-CO', {
+                                        style: 'currency',
+                                        currency: 'COP'
+                                    }).format(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+
 </div>
 <h6 class="title">Lista de Ventas</h6>
 <div class="action-buttons">
@@ -77,21 +134,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for venta in ventas %}
-                {% if request.user.is_vendedor or request.user.is_promotor %}
-                    {% if venta.vendedor.email == request.user.email %}
-<tr>
-            <td>{{ venta.insumo.nombre }}</td>
-            <td>{{ venta.cantidad_vendida }}</td>
-            <td>{{ venta.fecha_venta }}</td>
-            <td>{{ venta.vendedor.email }}</td>
-            <td>{{ venta.total_venta }}</td>
-            <td>
-                {% if request.user.is_administrador %}<a href="{% url 'venta_update' venta.pk %}" class="btn btn-sm btn-info">Editar</a><a href="{% url 'venta_delete' venta.pk %}" class="btn btn-sm btn-danger">Eliminar</a>{% endif %}
-            </td>
-        </tr>
-        {% endif %}
-                {% else %}
+        {% for venta in ventas %} {% if request.user.is_vendedor or request.user.is_promotor %} {% if venta.vendedor.email == request.user.email %}
         <tr>
             <td>{{ venta.insumo.nombre }}</td>
             <td>{{ venta.cantidad_vendida }}</td>
@@ -102,8 +145,18 @@
                 {% if request.user.is_administrador %}<a href="{% url 'venta_update' venta.pk %}" class="btn btn-sm btn-info">Editar</a><a href="{% url 'venta_delete' venta.pk %}" class="btn btn-sm btn-danger">Eliminar</a>{% endif %}
             </td>
         </tr>
-        {% endif %}
-            {% endfor %}
+        {% endif %} {% else %}
+        <tr>
+            <td>{{ venta.insumo.nombre }}</td>
+            <td>{{ venta.cantidad_vendida }}</td>
+            <td>{{ venta.fecha_venta }}</td>
+            <td>{{ venta.vendedor.email }}</td>
+            <td>{{ venta.total_venta }}</td>
+            <td>
+                {% if request.user.is_administrador %}<a href="{% url 'venta_update' venta.pk %}" class="btn btn-sm btn-info">Editar</a><a href="{% url 'venta_delete' venta.pk %}" class="btn btn-sm btn-danger">Eliminar</a>{% endif %}
+            </td>
+        </tr>
+        {% endif %} {% endfor %}
     </tbody>
 </table>
 {% endblock %}

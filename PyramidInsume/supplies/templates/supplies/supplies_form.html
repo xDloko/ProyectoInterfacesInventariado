@@ -1,16 +1,17 @@
-{% extends 'supplies/supplies_list.html' %} {% load static %}
+{% extends 'supplies/supplies_list.html' %} {% load static %} {% block content %}
 
-{% block content %}
 <head>
     <link rel="stylesheet" href="{% static 'supplies/css/suppliesdashboard.css' %}">
 </head>
-<h1>{% if object %}Editar{% else %}Crear{% endif %} Insumo</h1>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="{% url 'supplies_list' %}" class="btn btn-secondary">Cancelar</a>
-</form>
-<a href="{% url 'supplies_list' %}">Volver atras</a>
-{% endblock %}
+<h1 class="insumo-form-title">{% if object %}Editar{% else %}Crear{% endif %} Insumo</h1>
+
+<div class="insumo-form">
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Guardar</button>
+        <a href="{% url 'supplies_list' %}" class="btn-custom">Cancelar</a>
+    </form>
+</div>
+
+<a href="{% url 'supplies_list' %}" class="btn-custom">Volver atrás</a> {% endblock %}

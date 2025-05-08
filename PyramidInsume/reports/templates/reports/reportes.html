@@ -1,19 +1,41 @@
-{% extends 'users/dashboard.html' %} {% load static %}
-{% block content %}
-<head>
-    <link rel="stylesheet" href="{% static 'sales/css/salesdashboard.css' %}">
-</head>
-<div>
-    <h1>
-        <span style="font-weight:800;">Opciones de Reporte</span>
-    </h1>
-    <div>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
+{% extends 'users/dashboard.html' %} {% load static %} {% block content %}
 
-            <button type="submit" class="btn btn-primary">Generar PDF</button>
-        </form>
-    </div>
+<head>
+    <link rel="stylesheet" href="{% static 'sales/css/report_form.css' %}">
+</head>
+<div class="report-form-container">
+    <h1 class="report-form-title">Opciones de Reporte</h1>
+    <form method="post" class="report-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="start_date">Fecha inicio:</label>
+            <input type="date" id="start_date" name="start_date" required>
+        </div>
+
+        <div class="form-group">
+            <label for="end_date">Fecha fin:</label>
+            <input type="date" id="end_date" name="end_date" required>
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox-group">
+                <input type="checkbox" id="show_supplies" name="show_supplies" checked>
+                <label for="show_supplies">Mostrar Insumos</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="show_users" name="show_users">
+                <label for="show_users">Mostrar Usuarios</label>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="show_sales" name="show_sales" checked>
+                <label for="show_sales">Mostrar Ventas</label>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Generar PDF</button>
+    </form>
 </div>
 {% endblock %}

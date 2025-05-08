@@ -1,6 +1,8 @@
 /* ======= Dashboard de Ventas - Estilos Aislados ======= */
 
+
 /* Encabezado principal */
+
 .sales-dashboard h1 {
     font-size: 1.8rem;
     font-weight: 700;
@@ -11,7 +13,9 @@
     margin: 1.5rem 1rem;
 }
 
+
 /* Contenedor de título + botón */
+
 .sales-header {
     display: flex;
     justify-content: space-between;
@@ -19,7 +23,9 @@
     margin: 1.5rem 1rem;
 }
 
+
 /* Botón de generar reportes */
+
 .action-button.generate-report {
     padding: 10px 20px;
     border: 1px solid #3498db;
@@ -37,8 +43,6 @@
     transform: translateY(-1px);
 }
 
-
-
 .sales-dashboard h1 a {
     font-size: 1rem;
     font-weight: 400;
@@ -50,14 +54,18 @@
     text-decoration: underline;
 }
 
+
 /* Datos resumen */
+
 .sales-dashboard p {
     margin: 0.5rem 1rem;
     color: #34495e;
     font-size: 1rem;
 }
 
+
 /* Subtítulos */
+
 .sales-dashboard h2,
 .sales-dashboard h3 {
     margin: 1.5rem 1rem 1rem;
@@ -65,7 +73,9 @@
     font-weight: 600;
 }
 
+
 /* Listas de ventas */
+
 .sales-dashboard ul {
     margin: 0 1.5rem 1rem;
     padding-left: 1.2rem;
@@ -77,16 +87,34 @@
     font-size: 0.95rem;
 }
 
+
 /* Canvas para gráficas */
+
+.charts-container {
+    display: flex;
+    align-items: center;
+}
+
 #ventasMensualesChart {
-    margin: 2rem auto;
+    margin: 30px auto;
     display: block;
-    max-width: 600px;
+    max-width: 550px;
     background: #fff;
     padding: 1rem;
     border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
+
+#MoneyMensualesChart {
+    margin: 30px auto;
+    display: block;
+    max-width: 550px;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
 
 /* Título Lista */
 
@@ -98,7 +126,9 @@
     letter-spacing: 0.5px;
 }
 
+
 /* Botones de acción */
+
 .action-buttons {
     margin: 1rem;
 }
@@ -133,9 +163,11 @@
     transform: translateY(-1px);
 }
 
+
 /* Tabla */
+
 .table {
-    width: 100%;
+    width: 97%;
     border-collapse: separate;
     border-spacing: 0;
     background: white;
@@ -173,7 +205,9 @@
     background: #f8fafc;
 }
 
+
 /* Botones dentro de tabla */
+
 .btn {
     padding: 6px 12px;
     border-radius: 6px;
@@ -184,7 +218,9 @@
     transition: all 0.2s ease;
 }
 
+
 /* Editar */
+
 .btn-info {
     background: #e2e8f0;
     color: #334155;
@@ -194,27 +230,74 @@
     background: #cbd5e1;
 }
 
+
 /* Eliminar */
+
 .btn-danger {
     background: #fee2e2;
-    color: #b91c1c;
+    color: #c41d1d;
 }
 
 .btn-danger:hover {
     background: #fecaca;
 }
 
+.sales-summary {
+    display: flex;
+    align-items: center;
+    margin: 1rem 1rem 0;
+}
+
+.title-dashboard {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.sales-summary {
+    font-size: 1rem;
+    color: #34495e;
+}
+
+.top5-title {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin: 1rem 1rem 0;
+}
+
+.top5-list {
+    padding: 0;
+    margin: 0 2rem 1rem;
+    font-size: 0.9rem;
+    color: #34495e;
+}
+
+.top5-list li {
+    padding: 2px;
+    margin: 2px;
+}
+
+.strong-p {
+    margin-right: 8px;
+}
+
+.sales-title {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin: 1rem 1rem 0;
+}
+
+
 /* Responsive */
+
 @media (max-width: 768px) {
     .table thead {
         display: none;
     }
-
     .table tbody td {
         display: block;
         padding: 0.75rem;
     }
-
     .table tbody td:before {
         content: attr(data-label);
         font-weight: 600;
@@ -222,16 +305,100 @@
         width: 120px;
         color: #64748b;
     }
-
     .btn {
         display: block;
         margin-bottom: 0.5rem;
         width: 100%;
         text-align: center;
     }
-
     #ventasMensualesChart {
         width: 100%;
         height: auto;
     }
+    .charts-container {
+        display: block;
+        align-items: center;
+    }
+}
+
+.venta-form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.venta-form-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.venta-form-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #e74c69;
+}
+
+.venta-form-container select,
+.venta-form-container input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: #eee;
+    color: #e74c69;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background-color: #e74c69;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #a83535;
+}
+
+.btn-secondary {
+    background-color: #8b8989a9;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #ccc;
+}
+
+.volver-btn {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.title-canva {
+    text-align: center;
+    font-size: 1.5rem;
 }

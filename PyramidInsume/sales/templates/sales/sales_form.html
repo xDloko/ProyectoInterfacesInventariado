@@ -1,14 +1,22 @@
-{% extends 'sales/sales_list.html' %} {% load static %}
+{% extends 'sales/sales_list.html' %} {% load static %} {% block content %}
 
-{% block content %}
 <head>
     <link rel="stylesheet" href="{% static 'sales/css/salesdashboard.css' %}">
 </head>
-<h1>{% if object %}Editar{% else %}Crear{% endif %} Venta</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrar</button>
-</form>
-<a href="{% url 'sales_list' %}">Volver atras</a>
+
+<div class="venta-form-container">
+    <h1 class="venta-form-title">{% if object %}Editar{% else %}Crear{% endif %} Venta</h1>
+
+    <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <div class="form-buttons">
+            <button type="submit" class="btn-primary">Registrar</button>
+            <a href="{% url 'sales_list' %}" class="btn-secondary">Cancelar</a>
+        </div>
+    </form>
+
+    <div class="volver-btn">
+        <a href="{% url 'sales_list' %}" class="btn-secondary">Volver atrás</a>
+    </div>
+</div>
 {% endblock %}

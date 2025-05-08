@@ -2,13 +2,31 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'users/css/list.css' %}">
+    <link rel="stylesheet" href="{% static 'users/css/user_form.css' %}">
 </head>
-<h1>{% if object %}Editar{% else %}Crear{% endif %} Usuario</h1>
 
-<form method="post">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a href="{% url 'supplies_list' %}" class="btn btn-secondary">Cancelar</a>
-</form>
-<a href="{% url 'user_list' %}">Volver atras</a>
+<div class="user-form-container">
+    <h1 class="user-form-title">{% if object %}Editar{% else %}Crear{% endif %} Usuario</h1>
+
+    <form method="post" class="user-form">
+        {% csrf_token %} {% for field in form %}
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label> {{ field }} {% if field.name == 'password1' %} {% endif %} {% if field.errors %}
+            <div class="error-message">
+                {{ field.errors|join:", " }}
+            </div>
+            {% endif %} {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small> {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'user_list' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+
+    <a href="{% url 'user_list' %}" class="back-link">← Volver atrás</a>
+</div>
+
 {% endblock %}

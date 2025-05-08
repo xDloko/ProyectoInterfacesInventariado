@@ -3,8 +3,10 @@
     background-color: #e74c69;
 }
 
+
 /* Contenedor principal 
 */
+
 .supplies-container {
     padding: 2rem;
     background: #f8f9fa;
@@ -12,6 +14,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     margin: 1rem;
 }
+
 
 /* Título principal */
 
@@ -23,7 +26,9 @@
     letter-spacing: 0.5px;
 }
 
+
 /* Botones de acción */
+
 .action-buttons {
     margin-bottom: 1.5rem;
 }
@@ -58,7 +63,9 @@
     transform: translateY(-1px);
 }
 
+
 /* Estilos para la tabla */
+
 .table,
 .supplies-table {
     width: 100%;
@@ -108,7 +115,9 @@
     color: #4e73df;
 }
 
+
 /* Botones dentro de la tabla */
+
 .btn {
     padding: 6px 12px;
     border-radius: 6px;
@@ -137,7 +146,9 @@
     background: #fecaca;
 }
 
+
 /* Estado Publicado / N/A */
+
 .status-published {
     color: #166534;
     background: #dcfce7;
@@ -160,26 +171,27 @@
     text-align: center;
 }
 
+
 /* Transiciones */
+
 .table tbody tr {
     transition: background-color 0.2s ease;
 }
 
+
 /* Responsive */
+
 @media (max-width: 768px) {
     .supplies-container {
         padding: 1rem;
     }
-
     .table thead {
         display: none;
     }
-
     .table tbody td {
         display: block;
         padding: 0.75rem;
     }
-
     .table tbody td:before {
         content: attr(data-label);
         font-weight: 600;
@@ -187,11 +199,99 @@
         width: 120px;
         color: #64748b;
     }
-
     .btn {
         display: block;
         margin-bottom: 0.5rem;
         width: 100%;
         text-align: center;
     }
+    .title {
+        font-size: 10px;
+    }
+}
+
+
+/* Estilo general para el contenedor del formulario */
+
+.insumo-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+
+/* Campos de texto, número y textarea */
+
+.insumo-form input[type="text"],
+.insumo-form input[type="number"],
+.insumo-form textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #222;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    color: #e74c69;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1rem;
+    outline: none;
+}
+
+.insumo-form input::placeholder,
+.insumo-form textarea::placeholder {
+    color: #e74c69;
+}
+
+
+/* Checkbox */
+
+.insumo-form .form-check-input {
+    accent-color: #e74c69;
+    transform: scale(1.2);
+    margin-right: 0.5rem;
+}
+
+
+/* Botón */
+
+.insumo-form button {
+    background: #e74c69;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
+}
+
+.insumo-form button:hover {
+    background: #f9022f;
+}
+
+.insumo-form-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #c7156d;
+}
+
+.btn-custom {
+    background: #e0e0e0;
+    color: #333;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease;
+    margin-right: 1rem;
+}
+
+.btn-custom:hover {
+    background: #ccc;
 }

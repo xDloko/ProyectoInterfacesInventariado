@@ -1,6 +1,8 @@
 /* ======= Lista de Usuarios - Estilos Aislados ======= */
 
+
 /* Encabezado del módulo */
+
 .users-title {
     font-weight: 600;
     color: #2c3e50;
@@ -9,7 +11,9 @@
     letter-spacing: 0.5px;
 }
 
+
 /* Contenedor principal opcional */
+
 .users-container {
     padding: 2rem;
     background: #f8f9fa;
@@ -18,7 +22,9 @@
     margin: 1rem;
 }
 
+
 /* Botones de acción principal (ej: Añadir) */
+
 .action-buttons {
     margin: 1rem 1rem 2rem;
 }
@@ -53,7 +59,9 @@
     transform: translateY(-1px);
 }
 
+
 /* Tabla de usuarios */
+
 .table {
     width: 100%;
     border-collapse: separate;
@@ -92,7 +100,9 @@
     background: #f8fafc;
 }
 
+
 /* Botones dentro de la tabla */
+
 .btn {
     padding: 6px 12px;
     border-radius: 6px;
@@ -103,7 +113,9 @@
     transition: all 0.2s ease;
 }
 
+
 /* Editar */
+
 .btn-info {
     background: #e2e8f0;
     color: #334155;
@@ -113,7 +125,9 @@
     background: #cbd5e1;
 }
 
+
 /* Desactivar */
+
 .btn-warning {
     background: #fff3cd;
     color: #856404;
@@ -123,7 +137,9 @@
     background: #ffe8a1;
 }
 
+
 /* Activar */
+
 .btn-success {
     background: #d1fae5;
     color: #065f46;
@@ -133,7 +149,9 @@
     background: #a7f3d0;
 }
 
+
 /* Eliminar */
+
 .btn-danger {
     background: #fee2e2;
     color: #b91c1c;
@@ -143,7 +161,9 @@
     background: #fecaca;
 }
 
+
 /* Estado Activo/Inactivo */
+
 .users-status-active {
     color: #166534;
     background: #dcfce7;
@@ -166,22 +186,24 @@
     text-align: center;
 }
 
+
 /* Transiciones suaves */
+
 .table tbody tr {
     transition: background-color 0.2s ease;
 }
 
+
 /* Responsive */
+
 @media (max-width: 768px) {
     .table thead {
         display: none;
     }
-
     .table tbody td {
         display: block;
         padding: 0.75rem;
     }
-
     .table tbody td:before {
         content: attr(data-label);
         font-weight: 600;
@@ -189,7 +211,6 @@
         width: 120px;
         color: #64748b;
     }
-
     .btn {
         display: block;
         margin-bottom: 0.5rem;
@@ -197,3 +218,6 @@
         text-align: center;
     }
 }
+
+
+/* ojo /*

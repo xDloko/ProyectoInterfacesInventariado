@@ -42,7 +42,7 @@ class SalesList(ListView):
         context['ventas_por_vendedor'] = (
             ventas.values('vendedor__email')
             .annotate(total=Sum('cantidad_vendida'))
-            .order_by('-total')
+            .order_by('-total')[:10]
         )
 
 
@@ -53,6 +53,15 @@ class SalesList(ListView):
 
         context['ventas_mensuales'] = [
             {'mes': k, 'total': v} for k, v in sorted(ventas_mensuales.items())
+        ]
+
+        dinero_mensual = defaultdict(float)
+        for venta in ventas:
+            mes = venta.fecha_venta.strftime('%Y-%m')
+            dinero_mensual[mes] += float(venta.total_venta)
+
+        context['dinero_mensual'] = [
+            {'mes': k, 'total': v} for k, v in sorted(dinero_mensual.items())
         ]
 
         return context

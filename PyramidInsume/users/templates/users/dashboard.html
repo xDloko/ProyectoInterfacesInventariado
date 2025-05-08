@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -17,7 +18,7 @@
     <header class="header">
         <div class="logo-container">
             <img src="{% static 'users/images/pyramid.png' %}" alt="Avatar" class="avatar">
-            <h1 class="title apptitle">insumi</h1>
+            <h1 class="apptitle">insumi</h1>
 
             <h1 class="title">Bienvenido: {{ request.user.name }}</h1>
             <h1 class="title">Agente: {{ request.user.get_user_type_display }}</h1>
@@ -25,9 +26,11 @@
 
             <div class="useroptions">
                 <a href="{% url 'logout' %}" class="logout">
-                    <h1 class="title">Termianar Sesion</h1>
+                    <h1 class="title">Cerrar Sesion</h1>
                 </a>
+                <button id="toggle" class="action-button">Oscuro/Claro</button>
             </div>
+
         </div>
     </header>
 
@@ -64,5 +67,6 @@
         </main>
     </div>
 </body>
+<script src="{% static 'users/scripts/script.js' %}"></script>
 
 </html>
