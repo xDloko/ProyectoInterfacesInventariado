@@ -3,12 +3,11 @@
 <head>
     <link rel="stylesheet" href="{% static 'users/css/list.css' %}">
 </head>
-<h6 class="title">Lista de Usuarios</h6>
 
+<h6 class="title">Lista de Usuarios</h6>
 <div class="action-buttons">
     <a href="{% url 'user_create' %}"><button class="action-button add">Añadir</button></a>
 </div>
-
 <table class="table">
     <thead>
         <tr>
@@ -37,16 +36,28 @@
             <td>{{ user.ciudad }}</td>
             <td>{% if user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
             <td>
+                {% if request.user.is_administrador %}
+                <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-info">Editar</a>
+                {% endif %}
+
                 {% if request.user.is_administrador or request.user.is_supervisor %}
-                <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-info">Editar</a> {% if user.is_active %}
-                <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-warning">Desactivar</a> {% else %}
-                <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-success">Activar</a> {% endif %}
-                <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">Eliminar</a> {% endif %}
+                    {% if user.is_active %}
+                        <a href="{% url 'user_toggle_active' user.pk %}" 
+                            onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" 
+                            class="btn btn-sm btn-warning">
+                            Desactivar
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-success">Activar</a>
+                    {% endif %}
+                    <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                {% endif %}
             </td>
         </tr>
         {% endif %} {% endfor %}
     </tbody>
 </table>
 </div>
+
 
 {% endblock %}

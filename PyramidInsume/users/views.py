@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate
 from .models import User
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth import logout
+from .forms import CustomLoginForm
 
 def is_administrador(user):
     return user.is_authenticated and user.is_administrador
@@ -108,9 +109,11 @@ def toggle_user_active(request, pk):
 
 #login
 
+
 class CustomLoginView(LoginView):
     template_name = 'accounts/login.html'
-    redirect_authenticated_user = True  # Redirige si ya está autenticado
+    authentication_form = CustomLoginForm 
+    redirect_authenticated_user = True
     
     def get_success_url(self):
         user = self.request.user

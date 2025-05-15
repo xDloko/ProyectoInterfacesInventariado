@@ -1,6 +1,9 @@
 /* ======= Dashboard de Ventas - Estilos Aislados ======= */
 
-
+.sales-menu {
+    color: #fff;
+    background-color: #e74c69;
+}
 /* Encabezado principal */
 
 .sales-dashboard h1 {

@@ -96,3 +96,39 @@
   color: #ff0040;
 
 }
+
+.form-group {
+  margin: 0;
+  width: 100%;
+  height: auto;
+}
+
+.form-group input {
+  width: 100%;
+  height: auto;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #b3b3b3;
+  font-size: 1rem;
+}
+.form-group input:focus {
+  border-color: #ff1275;
+  outline: none;
+}
+
+.form-group p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #000000;
+  font-size: 20px;
+  text-align: left;
+  margin-top: 10px;
+
+}
+
+.errorlist {
+  color: #ff0040;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: left;
+}

@@ -1,6 +1,9 @@
 /* ======= Lista de Usuarios - Estilos Aislados ======= */
 
-
+.user-menu {
+    color: #fff;
+    background-color: #e74c69;
+}
 /* Encabezado del módulo */
 
 .users-title {

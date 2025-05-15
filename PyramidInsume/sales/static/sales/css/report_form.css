@@ -1,5 +1,10 @@
 /* static/sales/css/report_form.css */
 
+.sales-menu {
+    color: #fff;
+    background-color: #e74c69;
+}
+
 .report-form-container {
     max-width: 600px;
     margin: 30px auto;
@@ -84,4 +89,18 @@
 
 .submit-btn:hover {
     background-color: #e74c69;
+}
+
+.action-button {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2sease;
+    font-size: 0.9rem;
+    display: inline-flex
+;
+    align-items: center;
+    gap: 0.5rem;
 }

@@ -1,6 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import User
+from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate
+from django.utils.translation import gettext_lazy as _
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -52,5 +57,30 @@ class CustomUserChangeForm(UserChangeForm):
         
 
         
-        
-        
+class CustomLoginForm(AuthenticationForm):
+    username = forms.EmailField(label='Correo electrónico', widget=forms.EmailInput(attrs={'autofocus': True}))
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if username is not None and password:
+            self.user_cache = authenticate(
+                self.request, username=username, password=password
+            )
+
+            # Si no se encontró usuario
+            if self.user_cache is None:
+                raise forms.ValidationError(
+                    _("Correo o contraseña incorrectos."),
+                    code='invalid_login',
+                )
+            
+            # Si el usuario está inactivo
+            elif not self.user_cache.is_active:
+                raise forms.ValidationError(
+                    _("Tu cuenta está inactiva. Contacta con el administrador."),
+                    code='inactive_user'
+                )
+
+        return self.cleaned_data

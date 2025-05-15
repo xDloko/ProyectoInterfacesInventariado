@@ -10,23 +10,23 @@
     <form method="post" class="login-form">
         <h4 class="mb-0">Iniciar Sesión</h4>
         {% csrf_token %}
-        {% if form.errors %}
-            {% if 'inactive' in form.non_field_errors %}
-                <div class="alert alert-warning">Tu cuenta está inactiva. Contacta con el administrador.</div>
-            {% else %}
-                <div class="alert alert-danger">Credenciales incorrectas. Inténtalo de nuevo.</div>
+        <!-- <div class="mb-3">
+            
+            
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    {% if error == 'Tu cuenta está inactiva. Contacta con el administrador.' %}
+                        <div class="alert alert-warning">{{ error }}</div>
+                    {% else %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+                {% endfor %}
             {% endif %}
-        {% endif %}
-
-        <div class="mb-3">
-            <label for="id_username" class="form-label">Email</label>
-            <input type="email" name="username" class="form-control" required>
+        </div> -->
+        <div class="form-group">
+            {{ form.as_p }}
         </div>
-
-        <div class="mb-3">
-            <label for="id_password" class="form-label">Contraseña</label>
-            <input type="password" name="password" class="form-control" required>
-        </div>
+        
         <div class="button-container">
             <button type="submit" class="btn btn-primary w-100">Ingresar</button>
         </div>
