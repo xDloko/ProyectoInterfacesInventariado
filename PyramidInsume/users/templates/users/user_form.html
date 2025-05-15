@@ -10,8 +10,11 @@
 
     <form method="post" class="user-form">
         {% csrf_token %} {% for field in form %}
-        <div class="form-group {% if field.errors %}has-error{% endif %}">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label> {{ field }} {% if field.name == 'password1' %} {% endif %} {% if field.errors %}
+        <div class="form-group 
+                        {% if field.errors %}has-error{% endif %} 
+                        {% if field.name == 'is_active' %}form-group-inline{% endif %}">
+
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label> {{ field }} {% if field.errors %}
             <div class="error-message">
                 {{ field.errors|join:", " }}
             </div>

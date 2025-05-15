@@ -33,6 +33,8 @@ class ReportesView(TemplateView):
     
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        # Verificar si el formulario es válido
+        print('si  craga post')
 
         if form.is_valid():
             mostrar_insumos = form.cleaned_data['mostrar_insumos']
@@ -47,6 +49,7 @@ class ReportesView(TemplateView):
             # Respuesta HTTP para descargar PDF
             response = HttpResponse(content_type='application/pdf')
             response['Content-Disposition'] = 'attachment; filename="reporte_personalizado.pdf"'
+            
 
             # Crear el PDF
             doc = SimpleDocTemplate(response, pagesize=letter)
@@ -142,6 +145,10 @@ class ReportesView(TemplateView):
 
             doc.build(elementos)
             return response
+        else:
+            # Si el formulario no es válido, renderizar de nuevo con errores
+            print('no  craga el pdf 22')
+            
 
         return render(request, self.template_name, {'form': form})
     

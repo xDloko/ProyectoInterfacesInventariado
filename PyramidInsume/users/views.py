@@ -70,7 +70,7 @@ class UserUpdateView(UpdateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         # Solo administradores pueden editar usuarios
-        if not self.request.user.is_administrador and self.request.user.pk != self.get_object().pk:
+        if not self.request.user.is_administrador and not self.request.user.is_supervisor and self.request.user.pk != self.get_object().pk:
             return redirect('permission_denied')
         return super().dispatch(*args, **kwargs)
     
@@ -88,14 +88,22 @@ class UserDeleteView(DeleteView):
     @method_decorator(user_passes_test(is_admin_or_surpervisor))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+    
 
-@login_required
-@user_passes_test(is_administrador)
+login_required
+user_passes_test(is_admin_or_surpervisor)
 def toggle_user_active(request, pk):
     user = get_object_or_404(User, pk=pk)
-    user.is_active = not user.is_active
+    if user.is_active == False:
+        user.is_active = True
+    else:
+        user.is_active = not user.is_active
     user.save()
     return redirect('user_list')
+
+
+
+
 
 
 #login
@@ -118,3 +126,4 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'Has cerrado sesión correctamente.')
     return redirect('login')
+
