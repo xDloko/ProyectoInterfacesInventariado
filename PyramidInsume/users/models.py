@@ -45,6 +45,15 @@ class User(AbstractUser):
 
     email = models.EmailField(unique=True)
 
+    CIUDAD_CHOICES = (
+        ('BOG', 'Bogotá'),
+        ('MED', 'Medellín'),
+        ('CAL', 'Cali'),
+        ('BQU', 'Barranquilla'),
+        ('CTG', 'Cartagena'),
+        ('OTR', 'Otra'),
+    )
+
     USER_TYPE_CHOICES = (
         (1, 'Administrador'),
         (2, 'Vendedor'),
@@ -52,10 +61,27 @@ class User(AbstractUser):
     )
 
     #aqui se añaden los campos de los usuarios
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'), unique=True, blank=True, null=True)
+    cedula = models.CharField(_('cédula'), max_length=20, unique=True, blank=True, null=True)
+
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=2)
     is_active = models.BooleanField(default=True)
-    ciudad = models.CharField(max_length=100, blank=True, null=True)
+    ciudad = models.CharField(
+        max_length=3,  # Longitud suficiente para almacenar el código de ciudad
+        choices=CIUDAD_CHOICES,
+        blank=True,
+        null=True,
+        verbose_name=_('Ciudad')
+    )
+
+    created_by = models.ForeignKey(
+        'self',  
+        on_delete=models.SET_NULL, 
+        null=True,  
+        blank=True,  
+        related_name='created_users',  
+        verbose_name=_('creado por')  
+    )
 
     
     USERNAME_FIELD = 'email'
