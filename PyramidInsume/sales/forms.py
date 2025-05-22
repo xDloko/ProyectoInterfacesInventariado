@@ -4,7 +4,7 @@ from .models import Venta, Insumo
 class VentaForm(forms.ModelForm):
     class Meta:
         model = Venta
-        fields = ['insumo', 'cantidad_vendida']
+        fields = ['insumo', 'cantidad_vendida', 'ciudad']
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)

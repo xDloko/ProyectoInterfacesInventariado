@@ -39,13 +39,63 @@ class UserListView(ListView):
     model = User
     template_name = 'users/user_list.html'
     context_object_name = 'users'
-    
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        # Obtener el usuario actual
+        user = self.request.user
+
+        # Si el usuario es un vendedor, mostrar solo los usuarios que él creó
+        if user.is_vendedor:
+            return User.objects.filter(created_by=user)
+
+        # Si el usuario es administrador o supervisor, mostrar todos los usuarios
+        elif user.is_administrador or user.is_supervisor:
+            return User.objects.all()
+
+        # Por defecto, no mostrar ningún usuario
+        return User.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_vendedor'] = self.request.user.is_vendedor
+        return context
     
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'users': self.get_queryset()})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_vendedor'] = self.request.user.is_vendedor
+
+        # Si el usuario es administrador, agregar información sobre los usuarios creados
+        if self.request.user.is_administrador:
+            users_with_created_info = []
+            for user in self.get_queryset():
+                created_users_count = user.created_users.count()
+                created_users_names = [created_user.get_full_name() for created_user in user.created_users.all()]
+                users_with_created_info.append({
+                    'user': user,
+                    'created_users_count': created_users_count,
+                    'created_users_names': created_users_names,
+                })
+            context['users_with_created_info'] = users_with_created_info
+
+        elif self.request.user.is_supervisor:
+            users_with_created_info = []
+            for user in self.get_queryset():
+                created_users_count = user.created_users.count()
+                created_users_names = [created_user.get_full_name() for created_user in user.created_users.all()]
+                users_with_created_info.append({
+                    'user': user,
+                    'created_users_count': created_users_count,
+                    'created_users_names': created_users_names,
+                })
+            context['users_with_created_info'] = users_with_created_info
+
+        
+
+        return context
 
 class UserCreateView(CreateView):
     model = User
@@ -86,7 +136,7 @@ class UserDeleteView(DeleteView):
     success_url = reverse_lazy('user_list')
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_admin_or_surpervisor))
+    @method_decorator(user_passes_test(is_administrador))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     

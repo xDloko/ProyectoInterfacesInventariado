@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, View, ListView, UpdateView, DeleteView, CreateView
 from django.contrib.auth.decorators import login_required
@@ -24,7 +25,29 @@ class SalesList(ListView):
         return super().dispatch(*args, **kwargs)
     
     def get_queryset(self):
-        return Venta.objects.select_related('insumo', 'vendedor')
+        queryset = Venta.objects.select_related('insumo', 'vendedor')
+        # Filtro por ciudad
+        ciudad = self.request.GET.get('ciudad')
+        if ciudad:
+            queryset = queryset.filter(ciudad__icontains=ciudad)
+
+        # Filtro por fecha
+        fecha_inicio = self.request.GET.get('fecha_inicio')
+        fecha_fin = self.request.GET.get('fecha_fin')
+
+        try:
+            if fecha_inicio:
+                fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%d')
+                queryset = queryset.filter(fecha_venta__gte=fecha_inicio)
+            if fecha_fin:
+                fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%d')
+                queryset = queryset.filter(fecha_venta__lte=fecha_fin)
+        except ValueError:
+            pass  # Manejar error si la fecha no está en formato correcto
+        
+        return queryset
+    
+    
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -32,6 +55,7 @@ class SalesList(ListView):
 
         context['total_ventas'] = ventas.aggregate(total=Sum('cantidad_vendida'))['total'] or 0
         context['total_dinero'] = sum(v.total_venta for v in ventas)
+        context['ciudad_choices'] = self.model.CIUDAD_CHOICES
 
         context['ventas_por_insumo'] = (
             ventas.values('insumo__nombre')
@@ -63,6 +87,10 @@ class SalesList(ListView):
         context['dinero_mensual'] = [
             {'mes': k, 'total': v} for k, v in sorted(dinero_mensual.items())
         ]
+
+        context['filtro_ciudad'] = self.request.GET.get('ciudad', '')
+        context['filtro_fecha_inicio'] = self.request.GET.get('fecha_inicio', '')
+        context['filtro_fecha_fin'] = self.request.GET.get('fecha_fin', '')
 
         return context
     
