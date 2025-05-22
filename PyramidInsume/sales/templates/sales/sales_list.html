@@ -6,10 +6,14 @@
 <div>
     <div class="sales-header">
         <h1 class="title-dashboard"><span style="font-weight:800;">Dashboard de Ventas</span></h1>
+        {% if request.user.is_supervisor or request.user.is_administrador %}
         <a href="{% url 'reports' %}"><span style="font-weight:400;" class="action-button generate-report">Generar Reportes</span></a>
+        {% endif %}
     </div>
 
-    <form method="get">
+    
+    <form method="get" class="form-group">
+        <h2 class="FormTitle">Filtros: </h2>
         <div>
             <label for="ciudad">Filtrar por Ciudad:</label>
             <select id="ciudad" name="ciudad">

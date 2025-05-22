@@ -1,6 +1,4 @@
-{% extends 'users/dashboard.html' %}
-{% load static %}
-{% block content %}
+{% extends 'users/dashboard.html' %} {% load static %} {% block content %}
 
 <head>
     <link rel="stylesheet" href="{% static 'users/css/list.css' %}">
@@ -21,79 +19,73 @@
             <th>Estado</th>
             {% if request.user.is_administrador or request.user.is_supervisor %}
             <th>Usuarios Creados</th>
-            {% endif %}
             <th>Acciones</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
-        {% if request.user.is_administrador or request.user.is_supervisor %}
-            {% for info in users_with_created_info %}
-            <tr>
-                <td>{% if info.user.email %}{{ info.user.email }}{% else %}Sin Correo{% endif %}</td>
-                <td>{% if info.user.cedula %}{{ info.user.cedula }}{% else %}Sin Cédula{% endif %}</td>
-                <td>{{ info.user.get_full_name }}</td>
-                <td>{{ info.user.get_user_type_display }}</td>
-                <td>{{ info.user.get_ciudad_display }}</td>
-                <td>{% if info.user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
-                <td>
-                    <!-- Desplegable para usuarios creados -->
-                    <details>
-                        <summary>{{ info.created_users_count }} usuarios creados</summary>
-                        <ul>
-                            {% for name in info.created_users_names %}
-                            <li class="espaciado">{{ name }}</li>
-                            {% endfor %}
-                        </ul>
-                    </details>
-                </td>
-                <td>
-                    {% if request.user.is_administrador %}
-                        <a href="{% url 'user_update' info.user.pk %}" class="btn btn-sm btn-info">Editar</a>
-                    {% endif %}
-                    {% if info.user.is_active %}
-                        <a href="{% url 'user_toggle_active' info.user.pk %}" 
-                            onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" 
-                            class="btn btn-sm btn-warning">
-                            Desactivar
-                        </a>
-                    {% else %}
-                        <a href="{% url 'user_toggle_active' info.user.pk %}" class="btn btn-sm btn-success">Activar</a>
-                    {% endif %}
-                    {% if request.user.is_administrador %}
-                    <a href="{% url 'user_delete' info.user.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
+        {% if request.user.is_administrador or request.user.is_supervisor %} {% for info in users_with_created_info %}
+        {% if request.user.is_supervisor and info.user.user_type == 1 or info.user.user_type == 3 %}
+        <!-- nada -->
         {% else %}
-            {% for user in users %}
-            <tr>
-                <td>{% if user.email %}{{ user.email }}{% else %}Sin Correo{% endif %}</td>
-                <td>{% if user.cedula %}{{ user.cedula }}{% else %}Sin Cédula{% endif %}</td>
-                <td>{{ user.get_full_name }}</td>
-                <td>{{ user.get_user_type_display }}</td>
-                <td>{{ user.get_ciudad_display }}</td>
-                <td>{% if user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
-                <td>
-                    {% if request.user.is_administrador %}
-                    <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-info">Editar</a>
-                    {% endif %}
-                    {% if request.user.is_administrador or request.user.is_supervisor %}
-                        {% if user.is_active %}
-                            <a href="{% url 'user_toggle_active' user.pk %}" 
-                                onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" 
-                                class="btn btn-sm btn-warning">
+        <tr>
+            <td>{% if info.user.email %}{{ info.user.email }}{% else %}Sin Correo{% endif %}</td>
+            <td>{% if info.user.cedula %}{{ info.user.cedula }}{% else %}Sin Cédula{% endif %}</td>
+            <td>{% if info.user.get_full_name %}{{ info.user.get_full_name }}{% else %} N/A {% endif %}</td>
+            <td>{{ info.user.get_user_type_display }}</td>
+            <td>{% if info.user.ciudad %}{{ info.user.get_ciudad_display }}{% else %} Desconocido {% endif %}</td>
+            <td>{% if info.user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
+            <td>
+                <!-- Desplegable para usuarios creados -->
+                <details>
+                    <summary>{{ info.created_users_count }} usuarios creados</summary>
+                    <ul>
+                        {% for name in info.created_users_names %}
+                        <li class="espaciado">{{ name }}</li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </td>
+            <td class="actionsB">
+                {% if request.user.is_administrador %}
+                <a href="{% url 'user_update' info.user.pk %}" class="btn btn-sm btn-info">Editar</a> 
+                {% endif %}
+
+                {% if request.user.is_supervisor or request.user.is_administrador %}
+                
+                {% if info.user.is_active %}
+                <a href="{% url 'user_toggle_active' info.user.pk %}" 
+                onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" class="btn btn-sm btn-warning">Desactivar</a>
+                {% else %}
+                <a href="{% url 'user_toggle_active' info.user.pk %}" class="btn btn-sm btn-success">Activar</a>
+                {% endif %}
+                {% endif %}
+                
+                {% if request.user.is_administrador %}
+                <a href="{% url 'user_delete' info.user.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                {% endif %}
+                
+            </td>
+        </tr>
+        {% endif %}{% endfor %} {% else %} {% for user in users %}
+        <tr>
+            <td>{% if user.email %}{{ user.email }}{% else %}Sin Correo{% endif %}</td>
+            <td>{% if user.cedula %}{{ user.cedula }}{% else %}Sin Cédula{% endif %}</td>
+            <td>{{ user.get_full_name }}</td>
+            <td>{{ user.get_user_type_display }}</td>
+            <td>{% if user.ciudad %}{{ user.get_ciudad_display }}{% else %} Desconocido {% endif %}</td>
+            <td>{% if user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
+            <td class="actionsB">
+                {% if request.user.is_administrador %}
+                <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-info">Editar</a> {% endif %} {% if request.user.is_administrador or request.user.is_supervisor %} {% if user.is_active %}
+                <a href="{% url 'user_toggle_active' user.pk %}" onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" class="btn btn-sm btn-warning">
                                 Desactivar
-                            </a>
-                        {% else %}
-                            <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-success">Activar</a>
-                        {% endif %}
-                        <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        {% endif %}
+                            </a> {% else %}
+                <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-success">Activar</a> {% endif %}
+                <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">Eliminar</a> {% endif %}
+            </td>
+        </tr>
+        {% endfor %} {% endif %}
     </tbody>
 </table>
 </div>

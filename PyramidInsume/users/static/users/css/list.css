@@ -4,6 +4,8 @@
     color: #fff;
     background-color: #e74c69;
 }
+
+
 /* Encabezado del módulo */
 
 .users-title {
@@ -227,6 +229,12 @@
     margin-top: 5px;
     margin-bottom: 5px;
     color: rgb(160, 160, 255);
+}
+
+.actionsB {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 
