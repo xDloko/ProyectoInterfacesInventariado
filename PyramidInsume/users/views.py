@@ -81,6 +81,20 @@ class UserListView(ListView):
                 })
             context['users_with_created_info'] = users_with_created_info
 
+        elif self.request.user.is_supervisor:
+            users_with_created_info = []
+            for user in self.get_queryset():
+                created_users_count = user.created_users.count()
+                created_users_names = [created_user.get_full_name() for created_user in user.created_users.all()]
+                users_with_created_info.append({
+                    'user': user,
+                    'created_users_count': created_users_count,
+                    'created_users_names': created_users_names,
+                })
+            context['users_with_created_info'] = users_with_created_info
+
+        
+
         return context
 
 class UserCreateView(CreateView):
@@ -122,7 +136,7 @@ class UserDeleteView(DeleteView):
     success_url = reverse_lazy('user_list')
     
     @method_decorator(login_required)
-    @method_decorator(user_passes_test(is_admin_or_surpervisor))
+    @method_decorator(user_passes_test(is_administrador))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
     

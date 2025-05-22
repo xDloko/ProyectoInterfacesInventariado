@@ -7,8 +7,32 @@
     <div class="sales-header">
         <h1 class="title-dashboard"><span style="font-weight:800;">Dashboard de Ventas</span></h1>
         <a href="{% url 'reports' %}"><span style="font-weight:400;" class="action-button generate-report">Generar Reportes</span></a>
-
     </div>
+
+    <form method="get">
+        <div>
+            <label for="ciudad">Filtrar por Ciudad:</label>
+            <select id="ciudad" name="ciudad">
+                <option value="">Todas</option>
+                {% for code, name in ciudad_choices %}
+                    <option value="{{ code }}" {% if filtro_ciudad == code %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="fecha_inicio">Desde:</label>
+            <input type="date" id="fecha_inicio" name="fecha_inicio" value="{{ filtro_fecha_inicio }}">
+        </div>
+
+        <div>
+            <label for="fecha_fin">Hasta:</label>
+            <input type="date" id="fecha_fin" name="fecha_fin" value="{{ filtro_fecha_fin }}">
+        </div>
+
+        <button type="submit">Aplicar Filtros</button>
+    </form>
+
     <p class="sales-summary">
         <strong class="strong-p">Total de Ventas:</strong>{{ total_ventas }}
     </p>
@@ -17,9 +41,7 @@
     </p>
     <h2 class="top5-title">Ventas por Insumo (Top 5)</h2>
     <ul class="top5-list">
-        {% for item in top_5_insumos %}
-        <li>{{ item.insumo__nombre }}: {{ item.total }} unidades</li>
-        {% endfor %} {% for item in ventas_por_insumo %}
+        {% for item in ventas_por_insumo %}
         <li>{{ item.insumo__nombre }}: {{ item.total }} unidades</li>
         {% endfor %}
     </ul>
@@ -31,6 +53,8 @@
     </ul>
 
     <h3 class="title-canva">Gráfica de Ventas Mensuales</h3>
+    
+    <a href="{% url 'sales_list' %}" class="clear-filter-button">Limpiar Filtros</a>
     <div class="charts-container">
 
         <canvas id="ventasMensualesChart" width="400" height="200"></canvas> {{ ventas_mensuales|json_script:"ventas-mensuales" }}
@@ -127,6 +151,7 @@
             <th>Cantidad Vendida</th>
             <th>Fecha de Venta</th>
             <th>Vendedor Responsable</th>
+            <th>Lugar</th>
             <th>Precio Total</th>
             {% if request.user.is_administrador %}
             <th>Acciones</th>
@@ -140,6 +165,7 @@
             <td>{{ venta.cantidad_vendida }}</td>
             <td>{{ venta.fecha_venta }}</td>
             <td>{{ venta.vendedor.email }}</td>
+            <td>{{ venta.get_ciudad_display }}</td>
             <td>{{ venta.total_venta }}</td>
             <td>
                 {% if request.user.is_administrador %}<a href="{% url 'venta_update' venta.pk %}" class="btn btn-sm btn-info">Editar</a><a href="{% url 'venta_delete' venta.pk %}" class="btn btn-sm btn-danger">Eliminar</a>{% endif %}
@@ -151,6 +177,7 @@
             <td>{{ venta.cantidad_vendida }}</td>
             <td>{{ venta.fecha_venta }}</td>
             <td>{{ venta.vendedor.email }}</td>
+            <td>{{ venta.get_ciudad_display }}</td>
             <td>{{ venta.total_venta }}</td>
             <td>
                 {% if request.user.is_administrador %}<a href="{% url 'venta_update' venta.pk %}" class="btn btn-sm btn-info">Editar</a><a href="{% url 'venta_delete' venta.pk %}" class="btn btn-sm btn-danger">Eliminar</a>{% endif %}

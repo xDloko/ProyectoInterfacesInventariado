@@ -51,6 +51,14 @@ class User(AbstractUser):
         ('CAL', 'Cali'),
         ('BQU', 'Barranquilla'),
         ('CTG', 'Cartagena'),
+        ('JAM', 'Jamundí'),
+        ('PST', 'Pasto'),
+        ('CUN', 'Cúcuta'),
+        ('BAY', 'Bucaramanga'),
+        ('SAM', 'Santa Marta'),
+        ('PER', 'Pereira'),
+        ('SAN', 'Santander de Quilichao'),
+        ('TUN', 'Tunja'),
         ('OTR', 'Otra'),
     )
 
@@ -71,7 +79,7 @@ class User(AbstractUser):
         choices=CIUDAD_CHOICES,
         blank=True,
         null=True,
-        verbose_name=_('Ciudad')
+        verbose_name=('Ciudad')
     )
 
     created_by = models.ForeignKey(

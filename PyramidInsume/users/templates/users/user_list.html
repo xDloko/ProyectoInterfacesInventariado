@@ -19,21 +19,21 @@
             <th>Tipo</th>
             <th>Ciudad</th>
             <th>Estado</th>
-            {% if request.user.is_administrador %}
+            {% if request.user.is_administrador or request.user.is_supervisor %}
             <th>Usuarios Creados</th>
             {% endif %}
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        {% if request.user.is_administrador %}
+        {% if request.user.is_administrador or request.user.is_supervisor %}
             {% for info in users_with_created_info %}
             <tr>
                 <td>{% if info.user.email %}{{ info.user.email }}{% else %}Sin Correo{% endif %}</td>
                 <td>{% if info.user.cedula %}{{ info.user.cedula }}{% else %}Sin Cédula{% endif %}</td>
                 <td>{{ info.user.get_full_name }}</td>
                 <td>{{ info.user.get_user_type_display }}</td>
-                <td>{{ user.get_ciudad_display }}</td>
+                <td>{{ info.user.get_ciudad_display }}</td>
                 <td>{% if info.user.is_active %}Activo{% else %}Inactivo{% endif %}</td>
                 <td>
                     <!-- Desplegable para usuarios creados -->
@@ -47,7 +47,9 @@
                     </details>
                 </td>
                 <td>
-                    <a href="{% url 'user_update' info.user.pk %}" class="btn btn-sm btn-info">Editar</a>
+                    {% if request.user.is_administrador %}
+                        <a href="{% url 'user_update' info.user.pk %}" class="btn btn-sm btn-info">Editar</a>
+                    {% endif %}
                     {% if info.user.is_active %}
                         <a href="{% url 'user_toggle_active' info.user.pk %}" 
                             onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" 
@@ -57,7 +59,9 @@
                     {% else %}
                         <a href="{% url 'user_toggle_active' info.user.pk %}" class="btn btn-sm btn-success">Activar</a>
                     {% endif %}
+                    {% if request.user.is_administrador %}
                     <a href="{% url 'user_delete' info.user.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
