@@ -4,6 +4,45 @@
     <link rel="stylesheet" href="{% static 'users/css/list.css' %}">
 </head>
 
+{% if messages %}
+    <div id="mensaje-exito" class="mensaje-exito">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+
+    <style>
+        .mensaje-exito {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: fadeOut 5s ease-in-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+
+    <script>
+        // Elimina el mensaje después de la animación
+        setTimeout(function() {
+            var mensaje = document.getElementById('mensaje-exito');
+            if (mensaje) {
+                mensaje.style.display = 'none';
+            }
+        }, 5000); // 5 segundos
+    </script>
+{% endif %}
+
 <h6 class="title">Lista de Usuarios</h6>
 <div class="action-buttons">
     <a href="{% url 'user_create' %}"><button class="action-button add">Añadir</button></a>
@@ -25,9 +64,9 @@
     </thead>
     <tbody>
         {% if request.user.is_administrador or request.user.is_supervisor %} {% for info in users_with_created_info %}
-        {% if request.user.is_supervisor and info.user.user_type == 1 or info.user.user_type == 3 %}
+        {% if request.user.is_supervisor and info.user.user_type == 1 %}
         <!-- nada -->
-        {% else %}
+        {% else %} 
         <tr>
             <td>{% if info.user.email %}{{ info.user.email }}{% else %}Sin Correo{% endif %}</td>
             <td>{% if info.user.cedula %}{{ info.user.cedula }}{% else %}Sin Cédula{% endif %}</td>
@@ -52,12 +91,15 @@
                 {% endif %}
 
                 {% if request.user.is_supervisor or request.user.is_administrador %}
-                
+                {% if request.user.is_supervisor and info.user.user_type == 3 %}
+                <!-- nada -->
+                {% else %}
                 {% if info.user.is_active %}
                 <a href="{% url 'user_toggle_active' info.user.pk %}" 
                 onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" class="btn btn-sm btn-warning">Desactivar</a>
                 {% else %}
                 <a href="{% url 'user_toggle_active' info.user.pk %}" class="btn btn-sm btn-success">Activar</a>
+                {% endif %}
                 {% endif %}
                 {% endif %}
                 
@@ -78,9 +120,8 @@
             <td class="actionsB">
                 {% if request.user.is_administrador %}
                 <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-info">Editar</a> {% endif %} {% if request.user.is_administrador or request.user.is_supervisor %} {% if user.is_active %}
-                <a href="{% url 'user_toggle_active' user.pk %}" onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" class="btn btn-sm btn-warning">
-                                Desactivar
-                            </a> {% else %}
+                <a href="{% url 'user_toggle_active' user.pk %}" onclick="return confirm('¿Está seguro de que desea desactivar este usuario?');" class="btn btn-sm btn-warning">Desactivar</a> 
+                {% else %}
                 <a href="{% url 'user_toggle_active' user.pk %}" class="btn btn-sm btn-success">Activar</a> {% endif %}
                 <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">Eliminar</a> {% endif %}
             </td>

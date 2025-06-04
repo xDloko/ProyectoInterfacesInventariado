@@ -19,4 +19,45 @@
         <a href="{% url 'sales_list' %}" class="btn-secondary">Volver atrás</a>
     </div>
 </div>
+
+{% if messages %}
+    <div id="mensaje-exito" class="mensaje-exito">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+
+    <style>
+        .mensaje-exito {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: fadeOut 5s ease-in-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+
+    <script>
+        // Elimina el mensaje después de la animación
+        setTimeout(function() {
+            var mensaje = document.getElementById('mensaje-exito');
+            if (mensaje) {
+                mensaje.style.display = 'none';
+            }
+        }, 5000); // 5 segundos
+    </script>
+{% endif %}
+
 {% endblock %}
+

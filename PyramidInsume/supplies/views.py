@@ -6,6 +6,7 @@ from .forms import InsumoForm  # Import the InsumoForm
 from django.urls import reverse_lazy  # Import reverse_lazy
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
+from django.contrib import messages  # Import messages framework
 
 def is_administrador(user):
     return user.is_authenticated and user.is_administrador
@@ -42,6 +43,11 @@ class SuppliesCreateView(CreateView):
         kwargs = super().get_form_kwargs()
         return kwargs
     
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Insumo creado exitosamente.")
+        return response
+    
 class SuppliesUpdateView(UpdateView):
     model = Insumo
     form_class = InsumoForm
@@ -59,6 +65,10 @@ class SuppliesUpdateView(UpdateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         return kwargs
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Insumo editado exitosamente.")
+        return response
 
 class SuppliesDeleteView(DeleteView):
     model = Insumo
@@ -69,6 +79,11 @@ class SuppliesDeleteView(DeleteView):
     @method_decorator(user_passes_test(is_administrador))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Insumo eliminado exitosamente.")
+        return response
 
 
 

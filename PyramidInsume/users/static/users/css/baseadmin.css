@@ -1,286 +1,307 @@
-    /* Reset de estilos */
-    
-    * {
+/* Reset de estilos */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Work Sans", sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+/* Encabezado */
+
+.header {
+    background-color: #e74c69;
+    /* Rosa fuerte */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: #fff;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-items: space-between;
+    width: 100%;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+    margin-right: 20px;
+    padding: 10px;
+}
+/* Contenedor principal */
+
+.container {
+    display: flex;
+    max-width: 98%;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+/* Menú lateral */
+
+.sidebar {
+    width: 250px;
+    padding: 20px;
+    border-right: 1px solid #e74c69;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu-item {
+    display: block;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e74c69;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+    width: 200px;
+}
+
+.menu-item:hover {
+    background-color: #e74c69;
+    color: #fff;
+}
+
+.menu-item.active {
+    background-color: #e74c69;
+    color: #fff;
+}
+/* Contenido principal */
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+/* Área central (contenido vacío) */
+
+.placeholder-content {
+    background-color: #f0f0f0;
+    border: 1px dashed #ccc;
+}
+
+.logout {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.logout h1 {
+    font-size: 18px;
+    color: #ffffff;
+    text-align: right;
+    position: relative;
+}
+/* .logout h1:hover {
+color: #ff002f;
+} */
+
+.logout h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.logout h1:hover::after {
+    width: 100%;
+}
+
+.useroptions {
+    display: flex;
+    margin-left: auto;
+}
+
+.apptitle {
+    font-family: "Playwrite RO", cursive;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    margin-right: 20px;
+    padding: 10px;
+}
+
+
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-mode .content {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-mode .placeholder-content {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-mode .sidebar {
+    background-color: #121212;
+    color: white;
+    border-right: 1px solid #ffffff;
+}
+
+body.dark-mode .header {
+    background-color: #2e2e2e;
+    color: white;
+}
+
+body.dark-mode .menu-item {
+    background-color: #121212;
+    color: white;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+}
+
+body.dark-mode li {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-mode .table {
+    background-color: #2e2e2e;
+    color: white;
+}
+
+body.dark-mode .title-dashboard {
+    color: white;
+}
+
+body.dark-mode .sales-summary {
+    color: white;
+}
+
+body.dark-mode .top5-title {
+    color: white;
+}
+
+body.dark-mode .sales-title {
+    color: white;
+}
+
+body.dark-mode .top5-list {
+    color: white;
+}
+
+.action-button {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+
+@media (max-width: 768px) {
+    .apptitle {
+        font-size: 12px;
+        padding: 6px;
         margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Work Sans", sans-serif;
+        margin-right: 2px;
     }
-    
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #fff;
-        color: #333;
+
+    .user-info h1 {
+        font-size: 8px;
+        margin: 2px;
+        padding: 0px;
     }
-    /* Encabezado */
-    
-    .header {
-        background-color: #e74c69;
-        /* Rosa fuerte */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        color: #fff;
-    }
-    
-    .logo-container {
-        display: flex;
-        align-items: center;
-        justify-items: space-between;
-        width: 100%;
-    }
-    
-    .avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-    }
-    
-    .title {
-        font-size: 22px;
-        font-weight: bold;
-        margin: 0;
-        margin-right: 20px;
-        padding: 10px;
-    }
-    /* Contenedor principal */
-    
-    .container {
-        display: flex;
-        max-width: 98%;
-        margin: 20px auto;
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    /* Menú lateral */
-    
-    .sidebar {
-        width: 250px;
-        padding: 20px;
-        border-right: 1px solid #e74c69;
-    }
-    
-    .menu {
-        list-style: none;
-    }
-    
-    .menu-item {
-        display: block;
-        padding: 6px 10px;
-        margin-bottom: 10px;
-        border: 1px solid #e74c69;
-        border-radius: 20px;
-        text-decoration: none;
-        color: #333;
-        transition: background-color 0.3s ease;
-        width: 200px;
-    }
-    
-    .menu-item:hover {
-        background-color: #e74c69;
-        color: #fff;
-    }
-    
-    .menu-item.active {
-        background-color: #e74c69;
-        color: #fff;
-    }
-    /* Contenido principal */
-    
-    .content {
-        flex: 1;
-        padding: 20px;
-    }
-    /* Área central (contenido vacío) */
-    
-    .placeholder-content {
-        background-color: #f0f0f0;
-        border: 1px dashed #ccc;
-    }
-    
-    .logout {
-        color: #ffffff;
-        text-decoration: none;
-    }
-    
     .logout h1 {
-        font-size: 18px;
+        font-size: 12px;
         color: #ffffff;
         text-align: right;
         position: relative;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 10px;
+        text-align: center;
     }
-    /* .logout h1:hover {
-    color: #ff002f;
-} */
-    
-    .logout h1::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 2px;
-        width: 0;
-        background-color: currentColor;
-        transition: width 0.3s ease;
-    }
-    
-    .logout h1:hover::after {
+    .header {
+        padding: 3px 3px;
         width: 100%;
     }
-    
-    .useroptions {
+    .sidebar {
+        width: 100%;
+        padding: 2px;
+    }
+    .avatar {
+        margin-right: 2px;
+    }
+    .container {
+        display: block;
+    }
+    .menu {
         display: flex;
-        margin-left: auto;
-    }
-    
-    .apptitle {
-        font-family: "Playwrite RO", cursive;
-        font-optical-sizing: auto;
-        font-weight: 700;
-        font-style: normal;
-        font-size: 24px;
-        font-weight: bold;
-        margin: 0;
-        margin-right: 20px;
-        padding: 10px;
-    }
-    
-    @media (max-width: 768px) {
-        .apptitle {
-            font-size: 20px;
-            padding: 6px;
-            margin: 0;
-            margin-right: 2px;
-        }
-        .title {
-            font-size: 12px;
-            margin: 2px;
-            padding: 0px;
-        }
-        .logout h1 {
-            font-size: 12px;
-            color: #ffffff;
-            text-align: right;
-            position: relative;
-            border: 1px solid rgb(255, 255, 255);
-            border-radius: 10px;
-            text-align: center;
-        }
-        .header {
-            padding: 3px 3px;
-            width: 100%;
-        }
-        .sidebar {
-            width: 100%;
-            padding: 2px;
-        }
-        .avatar {
-            margin-right: 2px;
-        }
-        .container {
-            display: block;
-        }
-        .menu {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .menu li {
-            width: 90%;
-            text-align: center;
-        }
-        .menu li a {
-            width: 100%;
-            text-align: center;
-            padding: 2px 0;
-        }
-        #toggle {
-            width: fit-content;
-            font-size: 10px;
-            padding: 2px;
-            display: flex;
-        }
-        .avatar {
-            width: 30px;
-            height: 30px;
-        }
-    }
-    
-    body.dark-mode {
-        background-color: #121212;
-        color: white;
-    }
-    
-    body.dark-mode .content {
-        background-color: #121212;
-        color: white;
-    }
-    
-    body.dark-mode .placeholder-content {
-        background-color: #121212;
-        color: white;
-    }
-    
-    body.dark-mode .sidebar {
-        background-color: #121212;
-        color: white;
-        border-right: 1px solid #ffffff;
-    }
-    
-    body.dark-mode .header {
-        background-color: #2e2e2e;
-        color: white;
-    }
-    
-    body.dark-mode .menu-item {
-        background-color: #121212;
-        color: white;
-        border: 1px solid #ffffff;
-        border-radius: 20px;
-    }
-    
-    body.dark-mode li {
-        background-color: #121212;
-        color: white;
-    }
-    
-    body.dark-mode .table {
-        background-color: #2e2e2e;
-        color: white;
-    }
-    
-    body.dark-mode .title-dashboard {
-        color: white;
-    }
-    
-    body.dark-mode .sales-summary {
-        color: white;
-    }
-    
-    body.dark-mode .top5-title {
-        color: white;
-    }
-    
-    body.dark-mode .sales-title {
-        color: white;
-    }
-    
-    body.dark-mode .top5-list {
-        color: white;
-    }
-    
-    .action-button {
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        font-size: 0.9rem;
-        display: inline-flex;
+        flex-direction: column;
         align-items: center;
-        gap: 0.5rem;
     }
+    .menu li {
+        width: 90%;
+        text-align: center;
+    }
+    .menu li a {
+        width: 100%;
+        text-align: center;
+        padding: 2px 0;
+    }
+    #toggle {
+        width: fit-content;
+        font-size: 10px;
+        padding: 2px;
+        display: flex;
+    }
+    .avatar {
+        width: 30px;
+        height: 30px;
+    }
+
+    .user-info {
+        display: block;
+    }
+
+    /* centrar */
+    h6 {
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .title {
+        margin: 0;
+        padding: 2px;
+        margin-right: 4px;
+    }
+}

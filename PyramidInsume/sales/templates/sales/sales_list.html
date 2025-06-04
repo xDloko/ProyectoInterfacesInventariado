@@ -3,6 +3,46 @@
 <head>
     <link rel="stylesheet" href="{% static 'sales/css/salesdashboard.css' %}">
 </head>
+
+{% if messages %}
+    <div id="mensaje-exito" class="mensaje-exito">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+
+    <style>
+        .mensaje-exito {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: fadeOut 5s ease-in-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+
+    <script>
+        // Elimina el mensaje después de la animación
+        setTimeout(function() {
+            var mensaje = document.getElementById('mensaje-exito');
+            if (mensaje) {
+                mensaje.style.display = 'none';
+            }
+        }, 5000); // 5 segundos
+    </script>
+{% endif %}
+
 <div>
     <div class="sales-header">
         <h1 class="title-dashboard"><span style="font-weight:800;">Dashboard de Ventas</span></h1>
@@ -15,9 +55,9 @@
     <form method="get" class="form-group">
         <h2 class="FormTitle">Filtros: </h2>
         <div>
-            <label for="ciudad">Filtrar por Ciudad:</label>
+            
             <select id="ciudad" name="ciudad">
-                <option value="">Todas</option>
+                <option value="">Ciudad: Todas</option>
                 {% for code, name in ciudad_choices %}
                     <option value="{{ code }}" {% if filtro_ciudad == code %}selected{% endif %}>{{ name }}</option>
                 {% endfor %}
@@ -35,7 +75,11 @@
         </div>
 
         <button type="submit">Aplicar Filtros</button>
+
+        
     </form>
+
+    <a href="{% url 'sales_list' %}" class="clear-filter-button">Limpiar Filtros</a>
 
     <p class="sales-summary">
         <strong class="strong-p">Total de Ventas:</strong>{{ total_ventas }}
@@ -58,10 +102,10 @@
 
     <h3 class="title-canva">Gráfica de Ventas Mensuales</h3>
     
-    <a href="{% url 'sales_list' %}" class="clear-filter-button">Limpiar Filtros</a>
+    
     <div class="charts-container">
 
-        <canvas id="ventasMensualesChart" width="400" height="200"></canvas> {{ ventas_mensuales|json_script:"ventas-mensuales" }}
+        <canvas id="ventasMensualesChart"></canvas> {{ ventas_mensuales|json_script:"ventas-mensuales" }}
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const rawData = JSON.parse(document.getElementById("ventas-mensuales").textContent);
@@ -91,7 +135,7 @@
             });
         </script>
 
-        <canvas id="MoneyMensualesChart" width="400" height="200"></canvas> {{ dinero_mensual|json_script:"money-mensuales" }}
+        <canvas id="MoneyMensualesChart" ></canvas> {{ dinero_mensual|json_script:"money-mensuales" }}
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const rawData2 = JSON.parse(document.getElementById("money-mensuales").textContent);

@@ -101,6 +101,7 @@ class UserCreateView(CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = 'users/user_form.html'
+    
     success_url = reverse_lazy('user_list')
     
     @method_decorator(login_required)
@@ -111,6 +112,11 @@ class UserCreateView(CreateView):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Usuario creado exitosamente.")
+        return response
 
 class UserUpdateView(UpdateView):
     model = User
@@ -129,6 +135,11 @@ class UserUpdateView(UpdateView):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Usuario Editado exitosamente.")
+        return response
 
 class UserDeleteView(DeleteView):
     model = User
@@ -139,6 +150,11 @@ class UserDeleteView(DeleteView):
     @method_decorator(user_passes_test(is_administrador))
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Abusadol, Usuario eliminado exitosamente.")
+        return response
     
 
 login_required

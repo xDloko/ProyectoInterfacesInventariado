@@ -19,9 +19,11 @@
         <div class="logo-container">
             <img src="{% static 'users/images/pyramid.png' %}" alt="Avatar" class="avatar">
             <h1 class="apptitle">insumi</h1>
-
-            <h1 class="title">Bienvenido: {{ request.user.name }}</h1>
-            <h1 class="title">Agente: {{ request.user.get_user_type_display }}</h1>
+        
+            <div class="user-info">
+                <h1 class="title">Bienvenido: {{ request.user.get_full_name }}</h1>
+                <h1 class="title">Agente: {{ request.user.get_user_type_display }}</h1>
+            </div>
 
 
             <div class="useroptions">

@@ -26,6 +26,10 @@
     margin: 1.5rem 1rem;
 }
 
+.sales-header h1 {
+    color: #333;
+}
+
 
 /* Botón de generar reportes */
 
@@ -291,38 +295,6 @@
 }
 
 
-/* Responsive */
-
-@media (max-width: 768px) {
-    .table thead {
-        display: none;
-    }
-    .table tbody td {
-        display: block;
-        padding: 0.75rem;
-    }
-    .table tbody td:before {
-        content: attr(data-label);
-        font-weight: 600;
-        display: inline-block;
-        width: 120px;
-        color: #64748b;
-    }
-    .btn {
-        display: block;
-        margin-bottom: 0.5rem;
-        width: 100%;
-        text-align: center;
-    }
-    #ventasMensualesChart {
-        width: 100%;
-        height: auto;
-    }
-    .charts-container {
-        display: block;
-        align-items: center;
-    }
-}
 
 .venta-form-container {
     max-width: 600px;
@@ -407,10 +379,11 @@
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
-    border-top: #2c3e50 1px solid;
-    border-bottom: #2c3e50 1px solid;
-    border-radius: 5px;
+    margin-bottom: 1rem;
+    border-top: #2c3e50 2px solid;
+    border-bottom: #2c3e50 2px solid;
+    display: flex;
+    justify-content: space-between;
 }
 
 .form-group div {
@@ -418,4 +391,129 @@
     align-items: center;
     margin-left: 10px;
     padding-right: 10px;
+}
+
+.form-group label{
+    font-weight: bold;
+    color: #2c3e50;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.form-group select {
+    padding: 11px;
+    border: 1px solid #2c3e50;
+    
+    background-color: #f0f0f0;
+    color: #2c3e50;
+    width: 100%;
+
+}
+
+.FormTitle {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-left: 15px;
+
+
+}
+
+.form-group input[type="date"] {
+    padding: 10px;
+    border: 1px solid #2c3e50;
+    
+    background-color: #f0f0f0;
+    color: #2c3e50;
+    width: 100%;
+}
+
+.form-group button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #e74c69;
+    color: rgb(197, 197, 197);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.clear-filter-button {
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #3498db;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .table thead {
+        display: none;
+    }
+    .table tbody td {
+        display: block;
+        padding: 0.75rem;
+    }
+    .table tbody td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        display: inline-block;
+        width: 120px;
+        color: #64748b;
+    }
+    .btn {
+        display: block;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
+    #ventasMensualesChart {
+        width: 100%;
+        height: auto;
+    }
+    .charts-container {
+        display: block;
+        align-items: center;
+    }
+    
+    .form-group {
+        display: block;
+        align-items: center;
+
+    }
+    .form-group div {
+        margin-left: 0;
+        padding-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .form-group button {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .action-button.generate-report{
+        padding: 8px;
+    }
+
+    .clear-filter-button {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
 }
