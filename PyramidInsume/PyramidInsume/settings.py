@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-4m_c%mp12+o1h6#&386rj^!%v*5kgv_&e67$q_w+6ic#8%tb8w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
 
 
 # Application definition
@@ -167,3 +167,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'insumepyramid@gmail.com'  # Tu dirección de correo
 EMAIL_HOST_PASSWORD = 'yjge hdeo eqvt xwgm'  # Contraseña del correo
 DEFAULT_FROM_EMAIL = 'insumepyramid@gmail.com'  # Dirección que aparecerá como remitente
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
