@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -87,19 +89,27 @@ WSGI_APPLICATION = 'PyramidInsume.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'pyramidBD',
+#         'USER': 'root',
+#         'PASSWORD': 'Pxnxkzb18',
+#         'HOST': 'localhost',  
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',  
+#             'sql_mode': 'traditional',
+#         },
+#     }
+# }
+
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pyramidBD',
-        'USER': 'root',
-        'PASSWORD': 'Pxnxkzb18',
-        'HOST': 'localhost',  
-        'PORT': '3306',
-        'OPTIONS': {
-            'charset': 'utf8mb4',  
-            'sql_mode': 'traditional',
-        },
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
 
 
@@ -168,5 +178,3 @@ EMAIL_HOST_USER = 'insumepyramid@gmail.com'  # Tu dirección de correo
 EMAIL_HOST_PASSWORD = 'yjge hdeo eqvt xwgm'  # Contraseña del correo
 DEFAULT_FROM_EMAIL = 'insumepyramid@gmail.com'  # Dirección que aparecerá como remitente
 
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
