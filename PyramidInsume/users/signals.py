@@ -19,3 +19,4 @@ def user_created(sender, instance, created, **kwargs):
             [instance.email],
             fail_silently=True,
         )
+
